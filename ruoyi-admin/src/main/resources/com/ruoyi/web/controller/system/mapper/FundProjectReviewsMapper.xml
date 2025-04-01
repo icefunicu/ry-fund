@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.controller.system.mapper.FundProjectReviewsMapper">
+
+    <resultMap type="FundProjectReviews" id="FundProjectReviewsResult">
+        <result property="id"    column="id"    />
+        <result property="projectId"    column="project_id"    />
+        <result property="reviewerId"    column="reviewer_id"    />
+        <result property="score"    column="score"    />
+        <result property="ranking"    column="ranking"    />
+        <result property="reviewComment"    column="review_comment"    />
+        <result property="reviewDate"    column="review_date"    />
+    </resultMap>
+
+    <sql id="selectFundProjectReviewsVo">
+        select id, project_id, reviewer_id, score, ranking, review_comment, review_date from fund_project_reviews
+    </sql>
+
+    <select id="selectFundProjectReviewsList" parameterType="FundProjectReviews" resultMap="FundProjectReviewsResult">
+        <include refid="selectFundProjectReviewsVo"/>
+        <where>
+            <if test="projectId != null "> and project_id = #{projectId}</if>
+            <if test="reviewerId != null "> and reviewer_id = #{reviewerId}</if>
+            <if test="score != null "> and score = #{score}</if>
+            <if test="ranking != null "> and ranking = #{ranking}</if>
+            <if test="reviewComment != null  and reviewComment != ''"> and review_comment = #{reviewComment}</if>
+            <if test="reviewDate != null "> and review_date = #{reviewDate}</if>
+        </where>
+    </select>
+
+    <select id="selectFundProjectReviewsById" parameterType="Long" resultMap="FundProjectReviewsResult">
+        <include refid="selectFundProjectReviewsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFundProjectReviews" parameterType="FundProjectReviews" useGeneratedKeys="true" keyProperty="id">
+        insert into fund_project_reviews
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">project_id,</if>
+            <if test="reviewerId != null">reviewer_id,</if>
+            <if test="score != null">score,</if>
+            <if test="ranking != null">ranking,</if>
+            <if test="reviewComment != null">review_comment,</if>
+            <if test="reviewDate != null">review_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">#{projectId},</if>
+            <if test="reviewerId != null">#{reviewerId},</if>
+            <if test="score != null">#{score},</if>
+            <if test="ranking != null">#{ranking},</if>
+            <if test="reviewComment != null">#{reviewComment},</if>
+            <if test="reviewDate != null">#{reviewDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFundProjectReviews" parameterType="FundProjectReviews">
+        update fund_project_reviews
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectId != null">project_id = #{projectId},</if>
+            <if test="reviewerId != null">reviewer_id = #{reviewerId},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="ranking != null">ranking = #{ranking},</if>
+            <if test="reviewComment != null">review_comment = #{reviewComment},</if>
+            <if test="reviewDate != null">review_date = #{reviewDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFundProjectReviewsById" parameterType="Long">
+        delete from fund_project_reviews where id = #{id}
+    </delete>
+
+    <delete id="deleteFundProjectReviewsByIds" parameterType="String">
+        delete from fund_project_reviews where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

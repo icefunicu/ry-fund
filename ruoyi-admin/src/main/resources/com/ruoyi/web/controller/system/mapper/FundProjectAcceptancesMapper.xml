@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.controller.system.mapper.FundProjectAcceptancesMapper">
+
+    <resultMap type="FundProjectAcceptances" id="FundProjectAcceptancesResult">
+        <result property="id"    column="id"    />
+        <result property="projectId"    column="project_id"    />
+        <result property="finalReport"    column="final_report"    />
+        <result property="delayReport"    column="delay_report"    />
+        <result property="delayedTime"    column="delayed_time"    />
+        <result property="acceptanceStatus"    column="acceptance_status"    />
+        <result property="acceptanceDate"    column="acceptance_date"    />
+    </resultMap>
+
+    <sql id="selectFundProjectAcceptancesVo">
+        select id, project_id, final_report, delay_report, delayed_time, acceptance_status, acceptance_date from fund_project_acceptances
+    </sql>
+
+    <select id="selectFundProjectAcceptancesList" parameterType="FundProjectAcceptances" resultMap="FundProjectAcceptancesResult">
+        <include refid="selectFundProjectAcceptancesVo"/>
+        <where>
+            <if test="projectId != null "> and project_id = #{projectId}</if>
+            <if test="finalReport != null  and finalReport != ''"> and final_report = #{finalReport}</if>
+            <if test="delayReport != null  and delayReport != ''"> and delay_report = #{delayReport}</if>
+            <if test="delayedTime != null "> and delayed_time = #{delayedTime}</if>
+            <if test="acceptanceStatus != null  and acceptanceStatus != ''"> and acceptance_status = #{acceptanceStatus}</if>
+            <if test="acceptanceDate != null "> and acceptance_date = #{acceptanceDate}</if>
+        </where>
+    </select>
+
+    <select id="selectFundProjectAcceptancesById" parameterType="Long" resultMap="FundProjectAcceptancesResult">
+        <include refid="selectFundProjectAcceptancesVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFundProjectAcceptances" parameterType="FundProjectAcceptances" useGeneratedKeys="true" keyProperty="id">
+        insert into fund_project_acceptances
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">project_id,</if>
+            <if test="finalReport != null">final_report,</if>
+            <if test="delayReport != null">delay_report,</if>
+            <if test="delayedTime != null">delayed_time,</if>
+            <if test="acceptanceStatus != null and acceptanceStatus != ''">acceptance_status,</if>
+            <if test="acceptanceDate != null">acceptance_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">#{projectId},</if>
+            <if test="finalReport != null">#{finalReport},</if>
+            <if test="delayReport != null">#{delayReport},</if>
+            <if test="delayedTime != null">#{delayedTime},</if>
+            <if test="acceptanceStatus != null and acceptanceStatus != ''">#{acceptanceStatus},</if>
+            <if test="acceptanceDate != null">#{acceptanceDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFundProjectAcceptances" parameterType="FundProjectAcceptances">
+        update fund_project_acceptances
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectId != null">project_id = #{projectId},</if>
+            <if test="finalReport != null">final_report = #{finalReport},</if>
+            <if test="delayReport != null">delay_report = #{delayReport},</if>
+            <if test="delayedTime != null">delayed_time = #{delayedTime},</if>
+            <if test="acceptanceStatus != null and acceptanceStatus != ''">acceptance_status = #{acceptanceStatus},</if>
+            <if test="acceptanceDate != null">acceptance_date = #{acceptanceDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFundProjectAcceptancesById" parameterType="Long">
+        delete from fund_project_acceptances where id = #{id}
+    </delete>
+
+    <delete id="deleteFundProjectAcceptancesByIds" parameterType="String">
+        delete from fund_project_acceptances where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

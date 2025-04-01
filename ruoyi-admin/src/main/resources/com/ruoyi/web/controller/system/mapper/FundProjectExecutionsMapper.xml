@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.controller.system.mapper.FundProjectExecutionsMapper">
+
+    <resultMap type="FundProjectExecutions" id="FundProjectExecutionsResult">
+        <result property="id"    column="id"    />
+        <result property="projectId"    column="project_id"    />
+        <result property="midtermReport"    column="midterm_report"    />
+        <result property="executionStatus"    column="execution_status"    />
+        <result property="fundType"    column="fund_type"    />
+        <result property="fundStatus"    column="fund_status"    />
+        <result property="executionDate"    column="execution_date"    />
+    </resultMap>
+
+    <sql id="selectFundProjectExecutionsVo">
+        select id, project_id, midterm_report, execution_status, fund_type, fund_status, execution_date from fund_project_executions
+    </sql>
+
+    <select id="selectFundProjectExecutionsList" parameterType="FundProjectExecutions" resultMap="FundProjectExecutionsResult">
+        <include refid="selectFundProjectExecutionsVo"/>
+        <where>
+            <if test="projectId != null "> and project_id = #{projectId}</if>
+            <if test="midtermReport != null  and midtermReport != ''"> and midterm_report = #{midtermReport}</if>
+            <if test="executionStatus != null  and executionStatus != ''"> and execution_status = #{executionStatus}</if>
+            <if test="fundType != null  and fundType != ''"> and fund_type = #{fundType}</if>
+            <if test="fundStatus != null  and fundStatus != ''"> and fund_status = #{fundStatus}</if>
+            <if test="executionDate != null "> and execution_date = #{executionDate}</if>
+        </where>
+    </select>
+
+    <select id="selectFundProjectExecutionsById" parameterType="Long" resultMap="FundProjectExecutionsResult">
+        <include refid="selectFundProjectExecutionsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFundProjectExecutions" parameterType="FundProjectExecutions" useGeneratedKeys="true" keyProperty="id">
+        insert into fund_project_executions
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">project_id,</if>
+            <if test="midtermReport != null">midterm_report,</if>
+            <if test="executionStatus != null and executionStatus != ''">execution_status,</if>
+            <if test="fundType != null and fundType != ''">fund_type,</if>
+            <if test="fundStatus != null and fundStatus != ''">fund_status,</if>
+            <if test="executionDate != null">execution_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">#{projectId},</if>
+            <if test="midtermReport != null">#{midtermReport},</if>
+            <if test="executionStatus != null and executionStatus != ''">#{executionStatus},</if>
+            <if test="fundType != null and fundType != ''">#{fundType},</if>
+            <if test="fundStatus != null and fundStatus != ''">#{fundStatus},</if>
+            <if test="executionDate != null">#{executionDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFundProjectExecutions" parameterType="FundProjectExecutions">
+        update fund_project_executions
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectId != null">project_id = #{projectId},</if>
+            <if test="midtermReport != null">midterm_report = #{midtermReport},</if>
+            <if test="executionStatus != null and executionStatus != ''">execution_status = #{executionStatus},</if>
+            <if test="fundType != null and fundType != ''">fund_type = #{fundType},</if>
+            <if test="fundStatus != null and fundStatus != ''">fund_status = #{fundStatus},</if>
+            <if test="executionDate != null">execution_date = #{executionDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFundProjectExecutionsById" parameterType="Long">
+        delete from fund_project_executions where id = #{id}
+    </delete>
+
+    <delete id="deleteFundProjectExecutionsByIds" parameterType="String">
+        delete from fund_project_executions where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

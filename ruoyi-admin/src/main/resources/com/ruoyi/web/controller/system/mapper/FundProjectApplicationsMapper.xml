@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.controller.system.mapper.FundProjectApplicationsMapper">
+
+    <resultMap type="FundProjectApplications" id="FundProjectApplicationsResult">
+        <result property="id"    column="id"    />
+        <result property="projectId"    column="project_id"    />
+        <result property="wordFilePath"    column="word_file_path"    />
+        <result property="demonstrationReport"    column="demonstration_report"    />
+        <result property="applicationDate"    column="application_date"    />
+    </resultMap>
+
+    <sql id="selectFundProjectApplicationsVo">
+        select id, project_id, word_file_path, demonstration_report, application_date from fund_project_applications
+    </sql>
+
+    <select id="selectFundProjectApplicationsList" parameterType="FundProjectApplications" resultMap="FundProjectApplicationsResult">
+        <include refid="selectFundProjectApplicationsVo"/>
+        <where>
+            <if test="projectId != null "> and project_id = #{projectId}</if>
+            <if test="wordFilePath != null  and wordFilePath != ''"> and word_file_path = #{wordFilePath}</if>
+            <if test="demonstrationReport != null  and demonstrationReport != ''"> and demonstration_report = #{demonstrationReport}</if>
+            <if test="applicationDate != null "> and application_date = #{applicationDate}</if>
+        </where>
+    </select>
+
+    <select id="selectFundProjectApplicationsById" parameterType="Long" resultMap="FundProjectApplicationsResult">
+        <include refid="selectFundProjectApplicationsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFundProjectApplications" parameterType="FundProjectApplications" useGeneratedKeys="true" keyProperty="id">
+        insert into fund_project_applications
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">project_id,</if>
+            <if test="wordFilePath != null and wordFilePath != ''">word_file_path,</if>
+            <if test="demonstrationReport != null and demonstrationReport != ''">demonstration_report,</if>
+            <if test="applicationDate != null">application_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">#{projectId},</if>
+            <if test="wordFilePath != null and wordFilePath != ''">#{wordFilePath},</if>
+            <if test="demonstrationReport != null and demonstrationReport != ''">#{demonstrationReport},</if>
+            <if test="applicationDate != null">#{applicationDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFundProjectApplications" parameterType="FundProjectApplications">
+        update fund_project_applications
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectId != null">project_id = #{projectId},</if>
+            <if test="wordFilePath != null and wordFilePath != ''">word_file_path = #{wordFilePath},</if>
+            <if test="demonstrationReport != null and demonstrationReport != ''">demonstration_report = #{demonstrationReport},</if>
+            <if test="applicationDate != null">application_date = #{applicationDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFundProjectApplicationsById" parameterType="Long">
+        delete from fund_project_applications where id = #{id}
+    </delete>
+
+    <delete id="deleteFundProjectApplicationsByIds" parameterType="String">
+        delete from fund_project_applications where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

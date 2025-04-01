@@ -6,33 +6,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap type="FundProjects" id="FundProjectsResult">
         <result property="id"    column="id"    />
-        <result property="projectName"    column="project_name"    />
         <result property="applicantId"    column="applicant_id"    />
+        <result property="title"    column="title"    />
         <result property="description"    column="description"    />
+        <result property="applicationFile"    column="application_file"    />
+        <result property="demonstrationFile"    column="demonstration_file"    />
+        <result property="applyDate"    column="apply_date"    />
         <result property="status"    column="status"    />
         <result property="startDate"    column="start_date"    />
-        <result property="endDate"    column="end_date"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateTime"    column="update_time"    />
+        <result property="deadline"    column="deadline"    />
+        <result property="budget"    column="budget"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedAt"    column="updated_at"    />
     </resultMap>
 
     <sql id="selectFundProjectsVo">
-        select id, project_name, applicant_id, description, status, start_date, end_date, create_time, update_time from fund_projects
+        select id, applicant_id, title, description, application_file, demonstration_file, apply_date, status, start_date, deadline, budget, created_at, updated_at from fund_projects
     </sql>
 
     <select id="selectFundProjectsList" parameterType="FundProjects" resultMap="FundProjectsResult">
         <include refid="selectFundProjectsVo"/>
         <where>
-            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
-            <if test="applicantId != null "> and applicant_id = #{applicantId}</if>
+            <if test="applicantId != null  and applicantId != ''"> and applicant_id = #{applicantId}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
             <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="applicationFile != null  and applicationFile != ''"> and application_file = #{applicationFile}</if>
+            <if test="demonstrationFile != null  and demonstrationFile != ''"> and demonstration_file = #{demonstrationFile}</if>
+            <if test="applyDate != null "> and apply_date = #{applyDate}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
             <if test="startDate != null "> and start_date = #{startDate}</if>
-            <if test="endDate != null "> and end_date = #{endDate}</if>
+            <if test="deadline != null "> and deadline = #{deadline}</if>
+            <if test="budget != null "> and budget = #{budget}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+            <if test="updatedAt != null "> and updated_at = #{updatedAt}</if>
         </where>
     </select>
 
-    <select id="selectFundProjectsById" parameterType="Long" resultMap="FundProjectsResult">
+    <select id="selectFundProjectsById" parameterType="String" resultMap="FundProjectsResult">
         <include refid="selectFundProjectsVo"/>
         where id = #{id}
     </select>
@@ -40,43 +50,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertFundProjects" parameterType="FundProjects" useGeneratedKeys="true" keyProperty="id">
         insert into fund_projects
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="projectName != null and projectName != ''">project_name,</if>
-            <if test="applicantId != null">applicant_id,</if>
+            <if test="applicantId != null and applicantId != ''">applicant_id,</if>
+            <if test="title != null and title != ''">title,</if>
             <if test="description != null">description,</if>
+            <if test="applicationFile != null">application_file,</if>
+            <if test="demonstrationFile != null">demonstration_file,</if>
+            <if test="applyDate != null">apply_date,</if>
             <if test="status != null and status != ''">status,</if>
             <if test="startDate != null">start_date,</if>
-            <if test="endDate != null">end_date,</if>
-            <if test="createTime != null">create_time,</if>
-            <if test="updateTime != null">update_time,</if>
+            <if test="deadline != null">deadline,</if>
+            <if test="budget != null">budget,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedAt != null">updated_at,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="projectName != null and projectName != ''">#{projectName},</if>
-            <if test="applicantId != null">#{applicantId},</if>
+            <if test="applicantId != null and applicantId != ''">#{applicantId},</if>
+            <if test="title != null and title != ''">#{title},</if>
             <if test="description != null">#{description},</if>
+            <if test="applicationFile != null">#{applicationFile},</if>
+            <if test="demonstrationFile != null">#{demonstrationFile},</if>
+            <if test="applyDate != null">#{applyDate},</if>
             <if test="status != null and status != ''">#{status},</if>
             <if test="startDate != null">#{startDate},</if>
-            <if test="endDate != null">#{endDate},</if>
-            <if test="createTime != null">#{createTime},</if>
-            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deadline != null">#{deadline},</if>
+            <if test="budget != null">#{budget},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
          </trim>
     </insert>
 
     <update id="updateFundProjects" parameterType="FundProjects">
         update fund_projects
         <trim prefix="SET" suffixOverrides=",">
-            <if test="projectName != null and projectName != ''">project_name = #{projectName},</if>
-            <if test="applicantId != null">applicant_id = #{applicantId},</if>
+            <if test="applicantId != null and applicantId != ''">applicant_id = #{applicantId},</if>
+            <if test="title != null and title != ''">title = #{title},</if>
             <if test="description != null">description = #{description},</if>
+            <if test="applicationFile != null">application_file = #{applicationFile},</if>
+            <if test="demonstrationFile != null">demonstration_file = #{demonstrationFile},</if>
+            <if test="applyDate != null">apply_date = #{applyDate},</if>
             <if test="status != null and status != ''">status = #{status},</if>
             <if test="startDate != null">start_date = #{startDate},</if>
-            <if test="endDate != null">end_date = #{endDate},</if>
-            <if test="createTime != null">create_time = #{createTime},</if>
-            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deadline != null">deadline = #{deadline},</if>
+            <if test="budget != null">budget = #{budget},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
         </trim>
         where id = #{id}
     </update>
 
-    <delete id="deleteFundProjectsById" parameterType="Long">
+    <delete id="deleteFundProjectsById" parameterType="String">
         delete from fund_projects where id = #{id}
     </delete>
 

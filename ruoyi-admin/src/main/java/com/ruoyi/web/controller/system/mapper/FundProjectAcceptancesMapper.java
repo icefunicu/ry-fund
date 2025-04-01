@@ -1,11 +1,10 @@
 package com.ruoyi.web.controller.system.mapper;
 
+import java.util.List;
 import com.ruoyi.web.controller.system.domain.FundProjectAcceptances;
 
-import java.util.List;
-
 /**
- * 项目验收信息Mapper接口
+ * 项目验收记录Mapper接口
  *
  * @author ruoyi
  * @date 2025-04-01
@@ -13,50 +12,50 @@ import java.util.List;
 public interface FundProjectAcceptancesMapper
 {
     /**
-     * 查询项目验收信息
+     * 查询项目验收记录
      *
-     * @param id 项目验收信息主键
-     * @return 项目验收信息
+     * @param id 项目验收记录主键
+     * @return 项目验收记录
      */
-    public FundProjectAcceptances selectFundProjectAcceptancesById(Long id);
+    public FundProjectAcceptances selectFundProjectAcceptancesById(String id);
 
     /**
-     * 查询项目验收信息列表
+     * 查询项目验收记录列表
      *
-     * @param fundProjectAcceptances 项目验收信息
-     * @return 项目验收信息集合
+     * @param fundProjectAcceptances 项目验收记录
+     * @return 项目验收记录集合
      */
     public List<FundProjectAcceptances> selectFundProjectAcceptancesList(FundProjectAcceptances fundProjectAcceptances);
 
     /**
-     * 新增项目验收信息
+     * 新增项目验收记录
      *
-     * @param fundProjectAcceptances 项目验收信息
+     * @param fundProjectAcceptances 项目验收记录
      * @return 结果
      */
     public int insertFundProjectAcceptances(FundProjectAcceptances fundProjectAcceptances);
 
     /**
-     * 修改项目验收信息
+     * 修改项目验收记录
      *
-     * @param fundProjectAcceptances 项目验收信息
+     * @param fundProjectAcceptances 项目验收记录
      * @return 结果
      */
     public int updateFundProjectAcceptances(FundProjectAcceptances fundProjectAcceptances);
 
     /**
-     * 删除项目验收信息
+     * 删除项目验收记录
      *
-     * @param id 项目验收信息主键
+     * @param id 项目验收记录主键
      * @return 结果
      */
-    public int deleteFundProjectAcceptancesById(Long id);
+    public int deleteFundProjectAcceptancesById(String id);
 
     /**
-     * 批量删除项目验收信息
+     * 批量删除项目验收记录
      *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteFundProjectAcceptancesByIds(Long[] ids);
+    public int deleteFundProjectAcceptancesByIds(String[] ids);
 }

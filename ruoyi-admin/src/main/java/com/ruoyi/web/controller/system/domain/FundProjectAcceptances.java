@@ -8,7 +8,7 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 项目验收信息对象 fund_project_acceptances
+ * 项目验收记录对象 fund_project_acceptances
  *
  * @author ruoyi
  * @date 2025-04-01
@@ -18,11 +18,11 @@ public class FundProjectAcceptances extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 验收记录ID */
-    private Long id;
+    private String id;
 
-    /** 项目ID（对应项目信息表） */
-    @Excel(name = "项目ID", readConverterExp = "对=应项目信息表")
-    private Long projectId;
+    /** 项目ID */
+    @Excel(name = "项目ID")
+    private String projectId;
 
     /** 结题报告文件路径 */
     @Excel(name = "结题报告文件路径")
@@ -30,37 +30,41 @@ public class FundProjectAcceptances extends BaseEntity
 
     /** 延期报告文件路径 */
     @Excel(name = "延期报告文件路径")
-    private String delayReport;
+    private String extensionReport;
 
     /** 延期时长（单位：月） */
     @Excel(name = "延期时长", readConverterExp = "单=位：月")
-    private Long delayedTime;
+    private Long extensionTime;
 
     /** 验收状态 */
     @Excel(name = "验收状态")
     private String acceptanceStatus;
 
-    /** 验收申请提交时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "验收申请提交时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date acceptanceDate;
+    /** 验收评审意见 */
+    @Excel(name = "验收评审意见")
+    private String reviewComments;
 
-    public void setId(Long id)
+    /** 报告提交日期 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "报告提交日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date submissionDate;
+
+    public void setId(String id)
     {
         this.id = id;
     }
 
-    public Long getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setProjectId(Long projectId)
+    public void setProjectId(String projectId)
     {
         this.projectId = projectId;
     }
 
-    public Long getProjectId()
+    public String getProjectId()
     {
         return projectId;
     }
@@ -75,24 +79,24 @@ public class FundProjectAcceptances extends BaseEntity
         return finalReport;
     }
 
-    public void setDelayReport(String delayReport)
+    public void setExtensionReport(String extensionReport)
     {
-        this.delayReport = delayReport;
+        this.extensionReport = extensionReport;
     }
 
-    public String getDelayReport()
+    public String getExtensionReport()
     {
-        return delayReport;
+        return extensionReport;
     }
 
-    public void setDelayedTime(Long delayedTime)
+    public void setExtensionTime(Long extensionTime)
     {
-        this.delayedTime = delayedTime;
+        this.extensionTime = extensionTime;
     }
 
-    public Long getDelayedTime()
+    public Long getExtensionTime()
     {
-        return delayedTime;
+        return extensionTime;
     }
 
     public void setAcceptanceStatus(String acceptanceStatus)
@@ -105,14 +109,24 @@ public class FundProjectAcceptances extends BaseEntity
         return acceptanceStatus;
     }
 
-    public void setAcceptanceDate(Date acceptanceDate)
+    public void setReviewComments(String reviewComments)
     {
-        this.acceptanceDate = acceptanceDate;
+        this.reviewComments = reviewComments;
     }
 
-    public Date getAcceptanceDate()
+    public String getReviewComments()
     {
-        return acceptanceDate;
+        return reviewComments;
+    }
+
+    public void setSubmissionDate(Date submissionDate)
+    {
+        this.submissionDate = submissionDate;
+    }
+
+    public Date getSubmissionDate()
+    {
+        return submissionDate;
     }
 
     @Override
@@ -121,10 +135,11 @@ public class FundProjectAcceptances extends BaseEntity
             .append("id", getId())
             .append("projectId", getProjectId())
             .append("finalReport", getFinalReport())
-            .append("delayReport", getDelayReport())
-            .append("delayedTime", getDelayedTime())
+            .append("extensionReport", getExtensionReport())
+            .append("extensionTime", getExtensionTime())
             .append("acceptanceStatus", getAcceptanceStatus())
-            .append("acceptanceDate", getAcceptanceDate())
+            .append("reviewComments", getReviewComments())
+            .append("submissionDate", getSubmissionDate())
             .toString();
     }
 }

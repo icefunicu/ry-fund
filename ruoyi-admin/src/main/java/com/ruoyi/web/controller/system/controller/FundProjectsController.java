@@ -22,7 +22,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 项目信息Controller
+ * 项目基本信息Controller
  *
  * @author ruoyi
  * @date 2025-04-01
@@ -35,7 +35,7 @@ public class FundProjectsController extends BaseController
     private IFundProjectsService fundProjectsService;
 
     /**
-     * 查询项目信息列表
+     * 查询项目基本信息列表
      */
     @PreAuthorize("@ss.hasPermi('system:projects:list')")
     @GetMapping("/list")
@@ -47,33 +47,33 @@ public class FundProjectsController extends BaseController
     }
 
     /**
-     * 导出项目信息列表
+     * 导出项目基本信息列表
      */
     @PreAuthorize("@ss.hasPermi('system:projects:export')")
-    @Log(title = "项目信息", businessType = BusinessType.EXPORT)
+    @Log(title = "项目基本信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, FundProjects fundProjects)
     {
         List<FundProjects> list = fundProjectsService.selectFundProjectsList(fundProjects);
         ExcelUtil<FundProjects> util = new ExcelUtil<FundProjects>(FundProjects.class);
-        util.exportExcel(response, list, "项目信息数据");
+        util.exportExcel(response, list, "项目基本信息数据");
     }
 
     /**
-     * 获取项目信息详细信息
+     * 获取项目基本信息详细信息
      */
     @PreAuthorize("@ss.hasPermi('system:projects:query')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
+    public AjaxResult getInfo(@PathVariable("id") String id)
     {
         return success(fundProjectsService.selectFundProjectsById(id));
     }
 
     /**
-     * 新增项目信息
+     * 新增项目基本信息
      */
     @PreAuthorize("@ss.hasPermi('system:projects:add')")
-    @Log(title = "项目信息", businessType = BusinessType.INSERT)
+    @Log(title = "项目基本信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody FundProjects fundProjects)
     {
@@ -81,10 +81,10 @@ public class FundProjectsController extends BaseController
     }
 
     /**
-     * 修改项目信息
+     * 修改项目基本信息
      */
     @PreAuthorize("@ss.hasPermi('system:projects:edit')")
-    @Log(title = "项目信息", businessType = BusinessType.UPDATE)
+    @Log(title = "项目基本信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody FundProjects fundProjects)
     {
@@ -92,12 +92,12 @@ public class FundProjectsController extends BaseController
     }
 
     /**
-     * 删除项目信息
+     * 删除项目基本信息
      */
     @PreAuthorize("@ss.hasPermi('system:projects:remove')")
-    @Log(title = "项目信息", businessType = BusinessType.DELETE)
+    @Log(title = "项目基本信息", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
+    public AjaxResult remove(@PathVariable String[] ids)
     {
         return toAjax(fundProjectsService.deleteFundProjectsByIds(ids));
     }

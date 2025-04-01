@@ -8,29 +8,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="projectId"    column="project_id"    />
         <result property="finalReport"    column="final_report"    />
-        <result property="delayReport"    column="delay_report"    />
-        <result property="delayedTime"    column="delayed_time"    />
+        <result property="extensionReport"    column="extension_report"    />
+        <result property="extensionTime"    column="extension_time"    />
         <result property="acceptanceStatus"    column="acceptance_status"    />
-        <result property="acceptanceDate"    column="acceptance_date"    />
+        <result property="reviewComments"    column="review_comments"    />
+        <result property="submissionDate"    column="submission_date"    />
     </resultMap>
 
     <sql id="selectFundProjectAcceptancesVo">
-        select id, project_id, final_report, delay_report, delayed_time, acceptance_status, acceptance_date from fund_project_acceptances
+        select id, project_id, final_report, extension_report, extension_time, acceptance_status, review_comments, submission_date from fund_project_acceptances
     </sql>
 
     <select id="selectFundProjectAcceptancesList" parameterType="FundProjectAcceptances" resultMap="FundProjectAcceptancesResult">
         <include refid="selectFundProjectAcceptancesVo"/>
         <where>
-            <if test="projectId != null "> and project_id = #{projectId}</if>
+            <if test="projectId != null  and projectId != ''"> and project_id = #{projectId}</if>
             <if test="finalReport != null  and finalReport != ''"> and final_report = #{finalReport}</if>
-            <if test="delayReport != null  and delayReport != ''"> and delay_report = #{delayReport}</if>
-            <if test="delayedTime != null "> and delayed_time = #{delayedTime}</if>
+            <if test="extensionReport != null  and extensionReport != ''"> and extension_report = #{extensionReport}</if>
+            <if test="extensionTime != null "> and extension_time = #{extensionTime}</if>
             <if test="acceptanceStatus != null  and acceptanceStatus != ''"> and acceptance_status = #{acceptanceStatus}</if>
-            <if test="acceptanceDate != null "> and acceptance_date = #{acceptanceDate}</if>
+            <if test="reviewComments != null  and reviewComments != ''"> and review_comments = #{reviewComments}</if>
+            <if test="submissionDate != null "> and submission_date = #{submissionDate}</if>
         </where>
     </select>
 
-    <select id="selectFundProjectAcceptancesById" parameterType="Long" resultMap="FundProjectAcceptancesResult">
+    <select id="selectFundProjectAcceptancesById" parameterType="String" resultMap="FundProjectAcceptancesResult">
         <include refid="selectFundProjectAcceptancesVo"/>
         where id = #{id}
     </select>
@@ -38,37 +40,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertFundProjectAcceptances" parameterType="FundProjectAcceptances" useGeneratedKeys="true" keyProperty="id">
         insert into fund_project_acceptances
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="projectId != null">project_id,</if>
+            <if test="projectId != null and projectId != ''">project_id,</if>
             <if test="finalReport != null">final_report,</if>
-            <if test="delayReport != null">delay_report,</if>
-            <if test="delayedTime != null">delayed_time,</if>
+            <if test="extensionReport != null">extension_report,</if>
+            <if test="extensionTime != null">extension_time,</if>
             <if test="acceptanceStatus != null and acceptanceStatus != ''">acceptance_status,</if>
-            <if test="acceptanceDate != null">acceptance_date,</if>
+            <if test="reviewComments != null">review_comments,</if>
+            <if test="submissionDate != null">submission_date,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="projectId != null">#{projectId},</if>
+            <if test="projectId != null and projectId != ''">#{projectId},</if>
             <if test="finalReport != null">#{finalReport},</if>
-            <if test="delayReport != null">#{delayReport},</if>
-            <if test="delayedTime != null">#{delayedTime},</if>
+            <if test="extensionReport != null">#{extensionReport},</if>
+            <if test="extensionTime != null">#{extensionTime},</if>
             <if test="acceptanceStatus != null and acceptanceStatus != ''">#{acceptanceStatus},</if>
-            <if test="acceptanceDate != null">#{acceptanceDate},</if>
+            <if test="reviewComments != null">#{reviewComments},</if>
+            <if test="submissionDate != null">#{submissionDate},</if>
          </trim>
     </insert>
 
     <update id="updateFundProjectAcceptances" parameterType="FundProjectAcceptances">
         update fund_project_acceptances
         <trim prefix="SET" suffixOverrides=",">
-            <if test="projectId != null">project_id = #{projectId},</if>
+            <if test="projectId != null and projectId != ''">project_id = #{projectId},</if>
             <if test="finalReport != null">final_report = #{finalReport},</if>
-            <if test="delayReport != null">delay_report = #{delayReport},</if>
-            <if test="delayedTime != null">delayed_time = #{delayedTime},</if>
+            <if test="extensionReport != null">extension_report = #{extensionReport},</if>
+            <if test="extensionTime != null">extension_time = #{extensionTime},</if>
             <if test="acceptanceStatus != null and acceptanceStatus != ''">acceptance_status = #{acceptanceStatus},</if>
-            <if test="acceptanceDate != null">acceptance_date = #{acceptanceDate},</if>
+            <if test="reviewComments != null">review_comments = #{reviewComments},</if>
+            <if test="submissionDate != null">submission_date = #{submissionDate},</if>
         </trim>
         where id = #{id}
     </update>
 
-    <delete id="deleteFundProjectAcceptancesById" parameterType="Long">
+    <delete id="deleteFundProjectAcceptancesById" parameterType="String">
         delete from fund_project_acceptances where id = #{id}
     </delete>
 

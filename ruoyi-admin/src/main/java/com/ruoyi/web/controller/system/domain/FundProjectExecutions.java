@@ -8,7 +8,7 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 项目执行信息对象 fund_project_executions
+ * 项目执行记录对象 fund_project_executions
  *
  * @author ruoyi
  * @date 2025-04-01
@@ -18,61 +18,71 @@ public class FundProjectExecutions extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 执行记录ID */
-    private Long id;
+    private String id;
 
-    /** 项目ID（对应项目信息表） */
-    @Excel(name = "项目ID", readConverterExp = "对=应项目信息表")
-    private Long projectId;
+    /** 项目ID */
+    @Excel(name = "项目ID")
+    private String projectId;
 
     /** 中期报告文件路径 */
     @Excel(name = "中期报告文件路径")
-    private String midtermReport;
+    private String midTermReport;
 
-    /** 项目执行状态 */
-    @Excel(name = "项目执行状态")
+    /** 中期报告提交日期 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "中期报告提交日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date midTermDate;
+
+    /** 执行状态 */
+    @Excel(name = "执行状态")
     private String executionStatus;
 
-    /** 经费拨付类型 */
-    @Excel(name = "经费拨付类型")
-    private String fundType;
+    /** 项目进度（百分比） */
+    @Excel(name = "项目进度", readConverterExp = "百=分比")
+    private Long progress;
 
-    /** 经费拨付状态 */
-    @Excel(name = "经费拨付状态")
-    private String fundStatus;
+    /** 执行备注 */
+    @Excel(name = "执行备注")
+    private String remarks;
 
-    /** 执行记录创建时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "执行记录创建时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date executionDate;
-
-    public void setId(Long id)
+    public void setId(String id)
     {
         this.id = id;
     }
 
-    public Long getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setProjectId(Long projectId)
+    public void setProjectId(String projectId)
     {
         this.projectId = projectId;
     }
 
-    public Long getProjectId()
+    public String getProjectId()
     {
         return projectId;
     }
 
-    public void setMidtermReport(String midtermReport)
+    public void setMidTermReport(String midTermReport)
     {
-        this.midtermReport = midtermReport;
+        this.midTermReport = midTermReport;
     }
 
-    public String getMidtermReport()
+    public String getMidTermReport()
     {
-        return midtermReport;
+        return midTermReport;
+    }
+
+    public void setMidTermDate(Date midTermDate)
+    {
+        this.midTermDate = midTermDate;
+    }
+
+    public Date getMidTermDate()
+    {
+        return midTermDate;
     }
 
     public void setExecutionStatus(String executionStatus)
@@ -85,34 +95,24 @@ public class FundProjectExecutions extends BaseEntity
         return executionStatus;
     }
 
-    public void setFundType(String fundType)
+    public void setProgress(Long progress)
     {
-        this.fundType = fundType;
+        this.progress = progress;
     }
 
-    public String getFundType()
+    public Long getProgress()
     {
-        return fundType;
+        return progress;
     }
 
-    public void setFundStatus(String fundStatus)
+    public void setRemarks(String remarks)
     {
-        this.fundStatus = fundStatus;
+        this.remarks = remarks;
     }
 
-    public String getFundStatus()
+    public String getRemarks()
     {
-        return fundStatus;
-    }
-
-    public void setExecutionDate(Date executionDate)
-    {
-        this.executionDate = executionDate;
-    }
-
-    public Date getExecutionDate()
-    {
-        return executionDate;
+        return remarks;
     }
 
     @Override
@@ -120,11 +120,12 @@ public class FundProjectExecutions extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("projectId", getProjectId())
-            .append("midtermReport", getMidtermReport())
+            .append("midTermReport", getMidTermReport())
+            .append("midTermDate", getMidTermDate())
             .append("executionStatus", getExecutionStatus())
-            .append("fundType", getFundType())
-            .append("fundStatus", getFundStatus())
-            .append("executionDate", getExecutionDate())
+            .append("progress", getProgress())
+            .append("remarks", getRemarks())
+            .append("updateTime", getUpdateTime())
             .toString();
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import com.ruoyi.web.controller.system.domain.FundProjectExecutions;
 
 /**
- * 项目执行信息Mapper接口
+ * 项目执行记录Mapper接口
  *
  * @author ruoyi
  * @date 2025-04-01
@@ -12,50 +12,50 @@ import com.ruoyi.web.controller.system.domain.FundProjectExecutions;
 public interface FundProjectExecutionsMapper
 {
     /**
-     * 查询项目执行信息
+     * 查询项目执行记录
      *
-     * @param id 项目执行信息主键
-     * @return 项目执行信息
+     * @param id 项目执行记录主键
+     * @return 项目执行记录
      */
-    public FundProjectExecutions selectFundProjectExecutionsById(Long id);
+    public FundProjectExecutions selectFundProjectExecutionsById(String id);
 
     /**
-     * 查询项目执行信息列表
+     * 查询项目执行记录列表
      *
-     * @param fundProjectExecutions 项目执行信息
-     * @return 项目执行信息集合
+     * @param fundProjectExecutions 项目执行记录
+     * @return 项目执行记录集合
      */
     public List<FundProjectExecutions> selectFundProjectExecutionsList(FundProjectExecutions fundProjectExecutions);
 
     /**
-     * 新增项目执行信息
+     * 新增项目执行记录
      *
-     * @param fundProjectExecutions 项目执行信息
+     * @param fundProjectExecutions 项目执行记录
      * @return 结果
      */
     public int insertFundProjectExecutions(FundProjectExecutions fundProjectExecutions);
 
     /**
-     * 修改项目执行信息
+     * 修改项目执行记录
      *
-     * @param fundProjectExecutions 项目执行信息
+     * @param fundProjectExecutions 项目执行记录
      * @return 结果
      */
     public int updateFundProjectExecutions(FundProjectExecutions fundProjectExecutions);
 
     /**
-     * 删除项目执行信息
+     * 删除项目执行记录
      *
-     * @param id 项目执行信息主键
+     * @param id 项目执行记录主键
      * @return 结果
      */
-    public int deleteFundProjectExecutionsById(Long id);
+    public int deleteFundProjectExecutionsById(String id);
 
     /**
-     * 批量删除项目执行信息
+     * 批量删除项目执行记录
      *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteFundProjectExecutionsByIds(Long[] ids);
+    public int deleteFundProjectExecutionsByIds(String[] ids);
 }

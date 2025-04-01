@@ -7,30 +7,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="FundProjectExecutions" id="FundProjectExecutionsResult">
         <result property="id"    column="id"    />
         <result property="projectId"    column="project_id"    />
-        <result property="midtermReport"    column="midterm_report"    />
+        <result property="midTermReport"    column="mid_term_report"    />
+        <result property="midTermDate"    column="mid_term_date"    />
         <result property="executionStatus"    column="execution_status"    />
-        <result property="fundType"    column="fund_type"    />
-        <result property="fundStatus"    column="fund_status"    />
-        <result property="executionDate"    column="execution_date"    />
+        <result property="progress"    column="progress"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="updateTime"    column="update_time"    />
     </resultMap>
 
     <sql id="selectFundProjectExecutionsVo">
-        select id, project_id, midterm_report, execution_status, fund_type, fund_status, execution_date from fund_project_executions
+        select id, project_id, mid_term_report, mid_term_date, execution_status, progress, remarks, update_time from fund_project_executions
     </sql>
 
     <select id="selectFundProjectExecutionsList" parameterType="FundProjectExecutions" resultMap="FundProjectExecutionsResult">
         <include refid="selectFundProjectExecutionsVo"/>
         <where>
-            <if test="projectId != null "> and project_id = #{projectId}</if>
-            <if test="midtermReport != null  and midtermReport != ''"> and midterm_report = #{midtermReport}</if>
+            <if test="projectId != null  and projectId != ''"> and project_id = #{projectId}</if>
+            <if test="midTermReport != null  and midTermReport != ''"> and mid_term_report = #{midTermReport}</if>
+            <if test="midTermDate != null "> and mid_term_date = #{midTermDate}</if>
             <if test="executionStatus != null  and executionStatus != ''"> and execution_status = #{executionStatus}</if>
-            <if test="fundType != null  and fundType != ''"> and fund_type = #{fundType}</if>
-            <if test="fundStatus != null  and fundStatus != ''"> and fund_status = #{fundStatus}</if>
-            <if test="executionDate != null "> and execution_date = #{executionDate}</if>
+            <if test="progress != null "> and progress = #{progress}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
         </where>
     </select>
 
-    <select id="selectFundProjectExecutionsById" parameterType="Long" resultMap="FundProjectExecutionsResult">
+    <select id="selectFundProjectExecutionsById" parameterType="String" resultMap="FundProjectExecutionsResult">
         <include refid="selectFundProjectExecutionsVo"/>
         where id = #{id}
     </select>
@@ -38,37 +39,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertFundProjectExecutions" parameterType="FundProjectExecutions" useGeneratedKeys="true" keyProperty="id">
         insert into fund_project_executions
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="projectId != null">project_id,</if>
-            <if test="midtermReport != null">midterm_report,</if>
+            <if test="projectId != null and projectId != ''">project_id,</if>
+            <if test="midTermReport != null">mid_term_report,</if>
+            <if test="midTermDate != null">mid_term_date,</if>
             <if test="executionStatus != null and executionStatus != ''">execution_status,</if>
-            <if test="fundType != null and fundType != ''">fund_type,</if>
-            <if test="fundStatus != null and fundStatus != ''">fund_status,</if>
-            <if test="executionDate != null">execution_date,</if>
+            <if test="progress != null">progress,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="updateTime != null">update_time,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="projectId != null">#{projectId},</if>
-            <if test="midtermReport != null">#{midtermReport},</if>
+            <if test="projectId != null and projectId != ''">#{projectId},</if>
+            <if test="midTermReport != null">#{midTermReport},</if>
+            <if test="midTermDate != null">#{midTermDate},</if>
             <if test="executionStatus != null and executionStatus != ''">#{executionStatus},</if>
-            <if test="fundType != null and fundType != ''">#{fundType},</if>
-            <if test="fundStatus != null and fundStatus != ''">#{fundStatus},</if>
-            <if test="executionDate != null">#{executionDate},</if>
+            <if test="progress != null">#{progress},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="updateTime != null">#{updateTime},</if>
          </trim>
     </insert>
 
     <update id="updateFundProjectExecutions" parameterType="FundProjectExecutions">
         update fund_project_executions
         <trim prefix="SET" suffixOverrides=",">
-            <if test="projectId != null">project_id = #{projectId},</if>
-            <if test="midtermReport != null">midterm_report = #{midtermReport},</if>
+            <if test="projectId != null and projectId != ''">project_id = #{projectId},</if>
+            <if test="midTermReport != null">mid_term_report = #{midTermReport},</if>
+            <if test="midTermDate != null">mid_term_date = #{midTermDate},</if>
             <if test="executionStatus != null and executionStatus != ''">execution_status = #{executionStatus},</if>
-            <if test="fundType != null and fundType != ''">fund_type = #{fundType},</if>
-            <if test="fundStatus != null and fundStatus != ''">fund_status = #{fundStatus},</if>
-            <if test="executionDate != null">execution_date = #{executionDate},</if>
+            <if test="progress != null">progress = #{progress},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
         </trim>
         where id = #{id}
     </update>
 
-    <delete id="deleteFundProjectExecutionsById" parameterType="Long">
+    <delete id="deleteFundProjectExecutionsById" parameterType="String">
         delete from fund_project_executions where id = #{id}
     </delete>
 

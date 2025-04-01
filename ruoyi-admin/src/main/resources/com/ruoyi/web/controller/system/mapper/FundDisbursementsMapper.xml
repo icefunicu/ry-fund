@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.controller.system.mapper.FundDisbursementsMapper">
+
+    <resultMap type="FundDisbursements" id="FundDisbursementsResult">
+        <result property="id"    column="id"    />
+        <result property="projectId"    column="project_id"    />
+        <result property="disbursementType"    column="disbursement_type"    />
+        <result property="amount"    column="amount"    />
+        <result property="requestDate"    column="request_date"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+
+    <sql id="selectFundDisbursementsVo">
+        select id, project_id, disbursement_type, amount, request_date, remarks from fund_disbursements
+    </sql>
+
+    <select id="selectFundDisbursementsList" parameterType="FundDisbursements" resultMap="FundDisbursementsResult">
+        <include refid="selectFundDisbursementsVo"/>
+        <where>
+            <if test="projectId != null  and projectId != ''"> and project_id = #{projectId}</if>
+            <if test="disbursementType != null  and disbursementType != ''"> and disbursement_type = #{disbursementType}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="requestDate != null "> and request_date = #{requestDate}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+        </where>
+    </select>
+
+    <select id="selectFundDisbursementsById" parameterType="String" resultMap="FundDisbursementsResult">
+        <include refid="selectFundDisbursementsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFundDisbursements" parameterType="FundDisbursements" useGeneratedKeys="true" keyProperty="id">
+        insert into fund_disbursements
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectId != null and projectId != ''">project_id,</if>
+            <if test="disbursementType != null and disbursementType != ''">disbursement_type,</if>
+            <if test="amount != null">amount,</if>
+            <if test="requestDate != null">request_date,</if>
+            <if test="remarks != null">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectId != null and projectId != ''">#{projectId},</if>
+            <if test="disbursementType != null and disbursementType != ''">#{disbursementType},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="requestDate != null">#{requestDate},</if>
+            <if test="remarks != null">#{remarks},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFundDisbursements" parameterType="FundDisbursements">
+        update fund_disbursements
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectId != null and projectId != ''">project_id = #{projectId},</if>
+            <if test="disbursementType != null and disbursementType != ''">disbursement_type = #{disbursementType},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="requestDate != null">request_date = #{requestDate},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFundDisbursementsById" parameterType="String">
+        delete from fund_disbursements where id = #{id}
+    </delete>
+
+    <delete id="deleteFundDisbursementsByIds" parameterType="String">
+        delete from fund_disbursements where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

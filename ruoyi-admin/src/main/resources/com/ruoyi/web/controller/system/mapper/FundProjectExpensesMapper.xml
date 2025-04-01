@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.controller.system.mapper.FundProjectExpensesMapper">
+
+    <resultMap type="FundProjectExpenses" id="FundProjectExpensesResult">
+        <result property="id"    column="id"    />
+        <result property="projectId"    column="project_id"    />
+        <result property="expenseType"    column="expense_type"    />
+        <result property="expenseAmount"    column="expense_amount"    />
+        <result property="expenseDate"    column="expense_date"    />
+        <result property="description"    column="description"    />
+    </resultMap>
+
+    <sql id="selectFundProjectExpensesVo">
+        select id, project_id, expense_type, expense_amount, expense_date, description from fund_project_expenses
+    </sql>
+
+    <select id="selectFundProjectExpensesList" parameterType="FundProjectExpenses" resultMap="FundProjectExpensesResult">
+        <include refid="selectFundProjectExpensesVo"/>
+        <where>
+            <if test="projectId != null  and projectId != ''"> and project_id = #{projectId}</if>
+            <if test="expenseType != null  and expenseType != ''"> and expense_type = #{expenseType}</if>
+            <if test="expenseAmount != null "> and expense_amount = #{expenseAmount}</if>
+            <if test="expenseDate != null "> and expense_date = #{expenseDate}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+        </where>
+    </select>
+
+    <select id="selectFundProjectExpensesById" parameterType="String" resultMap="FundProjectExpensesResult">
+        <include refid="selectFundProjectExpensesVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFundProjectExpenses" parameterType="FundProjectExpenses" useGeneratedKeys="true" keyProperty="id">
+        insert into fund_project_expenses
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectId != null and projectId != ''">project_id,</if>
+            <if test="expenseType != null and expenseType != ''">expense_type,</if>
+            <if test="expenseAmount != null">expense_amount,</if>
+            <if test="expenseDate != null">expense_date,</if>
+            <if test="description != null">description,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectId != null and projectId != ''">#{projectId},</if>
+            <if test="expenseType != null and expenseType != ''">#{expenseType},</if>
+            <if test="expenseAmount != null">#{expenseAmount},</if>
+            <if test="expenseDate != null">#{expenseDate},</if>
+            <if test="description != null">#{description},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFundProjectExpenses" parameterType="FundProjectExpenses">
+        update fund_project_expenses
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectId != null and projectId != ''">project_id = #{projectId},</if>
+            <if test="expenseType != null and expenseType != ''">expense_type = #{expenseType},</if>
+            <if test="expenseAmount != null">expense_amount = #{expenseAmount},</if>
+            <if test="expenseDate != null">expense_date = #{expenseDate},</if>
+            <if test="description != null">description = #{description},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFundProjectExpensesById" parameterType="String">
+        delete from fund_project_expenses where id = #{id}
+    </delete>
+
+    <delete id="deleteFundProjectExpensesByIds" parameterType="String">
+        delete from fund_project_expenses where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

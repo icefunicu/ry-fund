@@ -73,6 +73,14 @@ public class FundProjects extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "记录更新时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date updatedAt;
+    //已使用金额
+    private BigDecimal usedFund;
+    public BigDecimal getUsedFund() {
+        return usedFund;
+    }
+    public void setUsedFund(BigDecimal usedFund) {
+        this.usedFund = usedFund;
+    }
 
     public String getApplicantName() {
         return applicantName;

@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.system.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,12 +57,18 @@ public class FundProjectExecutionsController extends BaseController
         List<FundProjectExecutions> list = fundProjectExecutionsService.selectFundProjectExecutionsList(fundProjectExecutions);
         for(FundProjectExecutions fundProjectExecutions1 : list){
             FundProjects fundProjects = fundProjectsService.selectFundProjectsById(fundProjectExecutions1.getProjectId());
-            fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getUserName());
+            fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getNickName());
             fundProjectExecutions1.setFundProjects(fundProjects);
 
             FundProjectExpenses fundProjectExpenses = new FundProjectExpenses();
             fundProjectExpenses.setProjectId(fundProjects.getId());
             List<FundProjectExpenses> fundProjectExpenses1 = fundProjectExpensesService.selectFundProjectExpensesList(fundProjectExpenses);
+            BigDecimal usedFund = new BigDecimal(0);
+            // 遍历
+            for (FundProjectExpenses fundProjectExpenses2 : fundProjectExpenses1) {
+                usedFund = usedFund.add(fundProjectExpenses2.getExpenseAmount());
+            }
+            fundProjects.setUsedFund(usedFund);
 
             fundProjectExecutions1.setFundProjectExpenses(fundProjectExpenses1);
 

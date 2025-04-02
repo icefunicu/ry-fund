@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.system.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.servlet.http.HttpServletResponse;
@@ -60,10 +61,11 @@ public class FundProjectExecutionsController extends BaseController
     {
         startPage();
         List<FundProjectExecutions> list = fundProjectExecutionsService.selectFundProjectExecutionsList(fundProjectExecutions);
+        List<FundProjectExecutions> newlist = new ArrayList<>();
         for(FundProjectExecutions fundProjectExecutions1 : list){
+
             FundProjects fundProjects = fundProjectsService.selectFundProjectsById(fundProjectExecutions1.getProjectId());
             if (!Objects.equals(fundProjects.getStatus(), "执行中")){
-                list.remove(fundProjectExecutions1);
                 continue;
             }
             fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getNickName());
@@ -83,9 +85,9 @@ public class FundProjectExecutionsController extends BaseController
             fundProjects.setusedFundProgress(fundProjects.getUsedFund().divide(fundProjects.getBudget(), 2, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("100")));
 
             fundProjectExecutions1.setFundProjectExpenses(fundProjectExpenses1);
-
+            newlist.add(fundProjectExecutions1);
         }
-        return getDataTable(list);
+        return getDataTable(newlist);
     }
 
     /**

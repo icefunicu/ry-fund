@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.system.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.ruoyi.web.controller.system.domain.FundProjectExecutions;
@@ -105,6 +106,9 @@ public class FundProjectReviewsServiceImpl implements IFundProjectReviewsService
     public int pass(FundProjectReviews fundProjectReviews)
     {
         FundProjects fundProjects = fundProjectsMapper.selectFundProjectsById(fundProjectReviews.getProjectId());
+        fundProjectReviews.setExpertId("1");
+        fundProjectReviews.setScore(new BigDecimal(100));
+        fundProjectReviews.setComments("通过");
         fundProjects.setStatus("执行中");
         fundProjectsMapper.updateFundProjects(fundProjects);
         FundProjectExecutions fundProjectExecutions = new FundProjectExecutions();

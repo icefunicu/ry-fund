@@ -2,6 +2,8 @@ package com.ruoyi.web.controller.system.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.web.controller.system.domain.FundProjects;
+import com.ruoyi.web.controller.system.mapper.FundProjectsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.web.controller.system.mapper.FundProjectExecutionsMapper;
@@ -19,6 +21,8 @@ public class FundProjectExecutionsServiceImpl implements IFundProjectExecutionsS
 {
     @Autowired
     private FundProjectExecutionsMapper fundProjectExecutionsMapper;
+    @Autowired
+    private FundProjectsMapper fundProjectsMapper;
 
     /**
      * 查询项目执行记录
@@ -91,5 +95,16 @@ public class FundProjectExecutionsServiceImpl implements IFundProjectExecutionsS
     public int deleteFundProjectExecutionsById(String id)
     {
         return fundProjectExecutionsMapper.deleteFundProjectExecutionsById(id);
+    }
+    /**
+     * 提交验收
+     * */
+    @Override
+    public int submitFundProjectExecutions(FundProjectExecutions fundProjectExecutions){
+        FundProjects fundProjects = fundProjectsMapper.selectFundProjectsById(fundProjectExecutions.getProjectId());
+        fundProjects.setStatus("验收中");
+        fundProjectsMapper.updateFundProjects(fundProjects);
+        fundProjectExecutions.setExecutionStatus("完成");
+        return fundProjectExecutionsMapper.updateFundProjectExecutions(fundProjectExecutions);
     }
 }

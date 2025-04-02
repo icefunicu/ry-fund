@@ -42,6 +42,14 @@ public class FundProjectReviews extends BaseEntity
     @Excel(name = "评审时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date reviewDate;
 
+    private FundProjects fundProjects;
+    public FundProjects getFundProjects() {
+        return fundProjects;
+    }
+    public void setFundProjects(FundProjects fundProjects) {
+        this.fundProjects = fundProjects;
+    }
+
     public void setId(String id)
     {
         this.id = id;

@@ -58,4 +58,6 @@ public interface IFundProjectExecutionsService
      * @return 结果
      */
     public int deleteFundProjectExecutionsById(String id);
+
+    int submitFundProjectExecutions(FundProjectExecutions fundProjectExecutions);
 }

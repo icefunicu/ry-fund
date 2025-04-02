@@ -1,6 +1,11 @@
 package com.ruoyi.web.controller.system.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.web.controller.system.domain.FundProjectExecutions;
+import com.ruoyi.web.controller.system.domain.FundProjects;
+import com.ruoyi.web.controller.system.mapper.FundProjectExecutionsMapper;
+import com.ruoyi.web.controller.system.mapper.FundProjectsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.web.controller.system.mapper.FundProjectReviewsMapper;
@@ -18,7 +23,10 @@ public class FundProjectReviewsServiceImpl implements IFundProjectReviewsService
 {
     @Autowired
     private FundProjectReviewsMapper fundProjectReviewsMapper;
-
+    @Autowired
+    private FundProjectsMapper fundProjectsMapper;
+    @Autowired
+    private FundProjectExecutionsMapper fundProjectExecutionsMapper;
     /**
      * 查询项目评审记录
      *
@@ -89,5 +97,21 @@ public class FundProjectReviewsServiceImpl implements IFundProjectReviewsService
     public int deleteFundProjectReviewsById(String id)
     {
         return fundProjectReviewsMapper.deleteFundProjectReviewsById(id);
+    }
+    /**
+     * 通过项目评审
+     * */
+    @Override
+    public int pass(FundProjectReviews fundProjectReviews)
+    {
+        FundProjects fundProjects = fundProjectsMapper.selectFundProjectsById(fundProjectReviews.getProjectId());
+        fundProjects.setStatus("执行中");
+        fundProjectsMapper.updateFundProjects(fundProjects);
+        FundProjectExecutions fundProjectExecutions = new FundProjectExecutions();
+        fundProjectExecutions.setProjectId(fundProjectReviews.getProjectId());
+        fundProjectExecutions.setExecutionStatus("未开始");
+        fundProjectExecutions.setProgress(0L);
+        fundProjectExecutionsMapper.insertFundProjectExecutions(fundProjectExecutions);
+        return fundProjectReviewsMapper.insertFundProjectReviews(fundProjectReviews);
     }
 }

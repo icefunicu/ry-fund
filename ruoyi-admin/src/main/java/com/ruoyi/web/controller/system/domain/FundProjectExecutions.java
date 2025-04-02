@@ -1,6 +1,8 @@
 package com.ruoyi.web.controller.system.domain;
 
 import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -44,6 +46,24 @@ public class FundProjectExecutions extends BaseEntity
     /** 执行备注 */
     @Excel(name = "执行备注")
     private String remarks;
+
+    private FundProjects fundProjects;
+
+    private List<FundProjectExpenses> fundProjectExpenses;
+
+    public List<FundProjectExpenses> getFundProjectExpenses() {
+        return fundProjectExpenses;
+    }
+    public void setFundProjectExpenses(List<FundProjectExpenses> fundProjectExpenses) {
+        this.fundProjectExpenses = fundProjectExpenses;
+    }
+
+    public FundProjects getFundProjects() {
+        return fundProjects;
+    }
+    public void setFundProjects(FundProjects fundProjects) {
+        this.fundProjects = fundProjects;
+    }
 
     public void setId(String id)
     {

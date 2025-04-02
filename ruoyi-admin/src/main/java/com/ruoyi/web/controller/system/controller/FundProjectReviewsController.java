@@ -2,6 +2,10 @@ package com.ruoyi.web.controller.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.web.controller.system.domain.FundProjects;
+import com.ruoyi.web.controller.system.service.IFundProjectsService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +37,10 @@ public class FundProjectReviewsController extends BaseController
 {
     @Autowired
     private IFundProjectReviewsService fundProjectReviewsService;
-
+    @Autowired
+    private IFundProjectsService fundProjectsService;
+    @Autowired
+    private ISysUserService sysUserService;
     /**
      * 查询项目评审记录列表
      */
@@ -43,6 +50,11 @@ public class FundProjectReviewsController extends BaseController
     {
         startPage();
         List<FundProjectReviews> list = fundProjectReviewsService.selectFundProjectReviewsList(fundProjectReviews);
+        for(FundProjectReviews reviews : list) {
+            FundProjects fundProjects = fundProjectsService.selectFundProjectsById(reviews.getProjectId());
+            fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getUserName());
+            reviews.setFundProjects(fundProjects);
+        }
         return getDataTable(list);
     }
 
@@ -100,5 +112,13 @@ public class FundProjectReviewsController extends BaseController
     public AjaxResult remove(@PathVariable String[] ids)
     {
         return toAjax(fundProjectReviewsService.deleteFundProjectReviewsByIds(ids));
+    }
+
+    /**
+     * 评审通过
+     * */
+    @PostMapping("/pass")
+    public AjaxResult pass(@RequestBody FundProjectReviews fundProjectReviews) {
+    	return toAjax(fundProjectReviewsService.pass(fundProjectReviews));
     }
 }

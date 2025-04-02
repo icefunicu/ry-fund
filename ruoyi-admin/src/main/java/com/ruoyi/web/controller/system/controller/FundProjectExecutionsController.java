@@ -2,6 +2,12 @@ package com.ruoyi.web.controller.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.web.controller.system.domain.FundProjectExpenses;
+import com.ruoyi.web.controller.system.domain.FundProjects;
+import com.ruoyi.web.controller.system.service.IFundProjectExpensesService;
+import com.ruoyi.web.controller.system.service.IFundProjectsService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +39,12 @@ public class FundProjectExecutionsController extends BaseController
 {
     @Autowired
     private IFundProjectExecutionsService fundProjectExecutionsService;
-
+    @Autowired
+    private IFundProjectsService fundProjectsService;
+    @Autowired
+    private ISysUserService sysUserService;
+    @Autowired
+    private IFundProjectExpensesService fundProjectExpensesService;
     /**
      * 查询项目执行记录列表
      */
@@ -43,6 +54,18 @@ public class FundProjectExecutionsController extends BaseController
     {
         startPage();
         List<FundProjectExecutions> list = fundProjectExecutionsService.selectFundProjectExecutionsList(fundProjectExecutions);
+        for(FundProjectExecutions fundProjectExecutions1 : list){
+            FundProjects fundProjects = fundProjectsService.selectFundProjectsById(fundProjectExecutions1.getProjectId());
+            fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getUserName());
+            fundProjectExecutions1.setFundProjects(fundProjects);
+
+            FundProjectExpenses fundProjectExpenses = new FundProjectExpenses();
+            fundProjectExpenses.setProjectId(fundProjects.getId());
+            List<FundProjectExpenses> fundProjectExpenses1 = fundProjectExpensesService.selectFundProjectExpensesList(fundProjectExpenses);
+
+            fundProjectExecutions1.setFundProjectExpenses(fundProjectExpenses1);
+
+        }
         return getDataTable(list);
     }
 
@@ -100,5 +123,13 @@ public class FundProjectExecutionsController extends BaseController
     public AjaxResult remove(@PathVariable String[] ids)
     {
         return toAjax(fundProjectExecutionsService.deleteFundProjectExecutionsByIds(ids));
+    }
+    /**
+     * 提交验收
+     * */
+    @PostMapping("/submit")
+    public AjaxResult submit(@RequestBody FundProjectExecutions fundProjectExecutions)
+    {
+        return toAjax(fundProjectExecutionsService.submitFundProjectExecutions(fundProjectExecutions));
     }
 }

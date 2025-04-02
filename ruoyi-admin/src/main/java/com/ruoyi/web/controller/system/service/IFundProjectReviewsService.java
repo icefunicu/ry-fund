@@ -58,4 +58,6 @@ public interface IFundProjectReviewsService
      * @return 结果
      */
     public int deleteFundProjectReviewsById(String id);
+
+    int pass(FundProjectReviews fundProjectReviews);
 }

@@ -2,6 +2,8 @@ package com.ruoyi.web.controller.system.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -77,6 +79,14 @@ public class FundProjects extends BaseEntity
     private BigDecimal usedFund;
     //使用金额百分比
     private BigDecimal usedFundProgress;
+    //经费使用情况列表
+    private List<FundProjectExpenses> fundProjectExpensesList;
+    public List<FundProjectExpenses> getFundProjectExpensesList() {
+        return fundProjectExpensesList;
+    }
+    public void setFundProjectExpensesList(List<FundProjectExpenses> fundProjectExpensesList) {
+        this.fundProjectExpensesList = fundProjectExpensesList;
+    }
     public BigDecimal getusedFundProgress() {
         return usedFundProgress;
     }

@@ -107,14 +107,15 @@ public class FundProjectExecutionsController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") String id)
     {
-        FundProjectExecutions fundProjectExecutions = fundProjectExecutionsService.selectFundProjectExecutionsById(id);
-        FundProjects fundProjects = fundProjectsService.selectFundProjectsById(fundProjectExecutions.getProjectId());
+
+        FundProjects fundProjects = fundProjectsService.selectFundProjectsById(id);
         fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getNickName());
-        fundProjectExecutions.setFundProjects(fundProjects);
+
 
         FundProjectExpenses fundProjectExpenses = new FundProjectExpenses();
         fundProjectExpenses.setProjectId(fundProjects.getId());
         List<FundProjectExpenses> fundProjectExpenses1 = fundProjectExpensesService.selectFundProjectExpensesList(fundProjectExpenses);
+        fundProjects.setFundProjectExpensesList(fundProjectExpenses1);
         BigDecimal usedFund = new BigDecimal(0);
         // 遍历
         for (FundProjectExpenses fundProjectExpenses2 : fundProjectExpenses1) {
@@ -125,9 +126,12 @@ public class FundProjectExecutionsController extends BaseController
 
         fundProjects.setusedFundProgress(fundProjects.getUsedFund().divide(fundProjects.getBudget(), 2, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("100")));
 
-        fundProjectExecutions.setFundProjectExpenses(fundProjectExpenses1);
-        return success(fundProjectExecutions);
+
+        return success(fundProjects);
     }
+
+
+
 
     /**
      * 新增项目执行记录

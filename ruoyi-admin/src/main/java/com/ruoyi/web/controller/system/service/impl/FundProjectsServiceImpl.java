@@ -90,4 +90,14 @@ public class FundProjectsServiceImpl implements IFundProjectsService
     {
         return fundProjectsMapper.deleteFundProjectsById(id);
     }
+    /**
+     * 提交审核
+     * */
+    @Override
+    public int submitFundProjects(FundProjects fundProjects)
+    {
+        fundProjects = fundProjectsMapper.selectFundProjectsById(fundProjects.getId());
+        fundProjects.setStatus("评审中");
+        return fundProjectsMapper.updateFundProjects(fundProjects);
+    }
 }

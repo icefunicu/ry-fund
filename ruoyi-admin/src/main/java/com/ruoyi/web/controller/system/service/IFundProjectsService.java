@@ -58,4 +58,8 @@ public interface IFundProjectsService
      * @return 结果
      */
     public int deleteFundProjectsById(String id);
+    /*
+    * 提交项目，进入审核状态
+    * */
+    int submitFundProjects(FundProjects fundProjects);
 }

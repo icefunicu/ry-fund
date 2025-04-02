@@ -2,6 +2,9 @@ package com.ruoyi.web.controller.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.system.service.ISysUserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +36,8 @@ public class FundProjectsController extends BaseController
 {
     @Autowired
     private IFundProjectsService fundProjectsService;
+    @Autowired
+    private ISysUserService sysUserService;
 
     /**
      * 查询项目基本信息列表
@@ -43,6 +48,9 @@ public class FundProjectsController extends BaseController
     {
         startPage();
         List<FundProjects> list = fundProjectsService.selectFundProjectsList(fundProjects);
+        for(FundProjects project : list){
+            project.setApplicantName(sysUserService.selectUserById((long) project.getApplicantId()).getUserName());
+        }
         return getDataTable(list);
     }
 
@@ -77,8 +85,12 @@ public class FundProjectsController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody FundProjects fundProjects)
     {
+        int applicationId = Math.toIntExact(getUserId());
+        fundProjects.setApplicantId(applicationId);
         return toAjax(fundProjectsService.insertFundProjects(fundProjects));
     }
+
+
 
     /**
      * 修改项目基本信息
@@ -101,4 +113,14 @@ public class FundProjectsController extends BaseController
     {
         return toAjax(fundProjectsService.deleteFundProjectsByIds(ids));
     }
+
+    /**
+     * 提交接口
+     */
+    @PostMapping("/submit")
+    public AjaxResult submit(@RequestBody FundProjects fundProjects)
+    {
+        return toAjax(fundProjectsService.submitFundProjects(fundProjects));
+    }
+
 }

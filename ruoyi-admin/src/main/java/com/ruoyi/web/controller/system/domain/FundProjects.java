@@ -14,6 +14,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2025-04-01
  */
+
 public class FundProjects extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -23,8 +24,9 @@ public class FundProjects extends BaseEntity
 
     /** 申请人ID */
     @Excel(name = "申请人ID")
-    private String applicantId;
+    private int applicantId;
 
+    private String applicantName;
     /** 项目标题 */
     @Excel(name = "项目标题")
     private String title;
@@ -72,6 +74,12 @@ public class FundProjects extends BaseEntity
     @Excel(name = "记录更新时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date updatedAt;
 
+    public String getApplicantName() {
+        return applicantName;
+    }
+    public void setApplicantName(String applicantName) {
+        this.applicantName = applicantName;
+    }
     public void setId(String id)
     {
         this.id = id;
@@ -82,12 +90,12 @@ public class FundProjects extends BaseEntity
         return id;
     }
 
-    public void setApplicantId(String applicantId)
+    public void setApplicantId(int applicantId)
     {
         this.applicantId = applicantId;
     }
 
-    public String getApplicantId()
+    public int getApplicantId()
     {
         return applicantId;
     }

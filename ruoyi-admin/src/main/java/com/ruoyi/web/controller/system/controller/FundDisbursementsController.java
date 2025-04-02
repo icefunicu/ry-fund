@@ -37,7 +37,7 @@ public class FundDisbursementsController extends BaseController
     /**
      * 查询项目经费拨付记录列表
      */
-    @PreAuthorize("@ss.hasPermi('system:disbursements:list')")
+
     @GetMapping("/list")
     public TableDataInfo list(FundDisbursements fundDisbursements)
     {
@@ -49,7 +49,7 @@ public class FundDisbursementsController extends BaseController
     /**
      * 导出项目经费拨付记录列表
      */
-    @PreAuthorize("@ss.hasPermi('system:disbursements:export')")
+
     @Log(title = "项目经费拨付记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, FundDisbursements fundDisbursements)
@@ -62,7 +62,7 @@ public class FundDisbursementsController extends BaseController
     /**
      * 获取项目经费拨付记录详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:disbursements:query')")
+
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") String id)
     {
@@ -72,7 +72,7 @@ public class FundDisbursementsController extends BaseController
     /**
      * 新增项目经费拨付记录
      */
-    @PreAuthorize("@ss.hasPermi('system:disbursements:add')")
+
     @Log(title = "项目经费拨付记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody FundDisbursements fundDisbursements)
@@ -83,7 +83,7 @@ public class FundDisbursementsController extends BaseController
     /**
      * 修改项目经费拨付记录
      */
-    @PreAuthorize("@ss.hasPermi('system:disbursements:edit')")
+
     @Log(title = "项目经费拨付记录", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody FundDisbursements fundDisbursements)
@@ -94,7 +94,7 @@ public class FundDisbursementsController extends BaseController
     /**
      * 删除项目经费拨付记录
      */
-    @PreAuthorize("@ss.hasPermi('system:disbursements:remove')")
+
     @Log(title = "项目经费拨付记录", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable String[] ids)

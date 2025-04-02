@@ -37,7 +37,6 @@ public class FundProjectExpensesController extends BaseController
     /**
      * 查询项目费用记录列表
      */
-    @PreAuthorize("@ss.hasPermi('system:expenses:list')")
     @GetMapping("/list")
     public TableDataInfo list(FundProjectExpenses fundProjectExpenses)
     {
@@ -49,7 +48,6 @@ public class FundProjectExpensesController extends BaseController
     /**
      * 导出项目费用记录列表
      */
-    @PreAuthorize("@ss.hasPermi('system:expenses:export')")
     @Log(title = "项目费用记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, FundProjectExpenses fundProjectExpenses)
@@ -62,7 +60,6 @@ public class FundProjectExpensesController extends BaseController
     /**
      * 获取项目费用记录详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:expenses:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") String id)
     {
@@ -72,7 +69,6 @@ public class FundProjectExpensesController extends BaseController
     /**
      * 新增项目费用记录
      */
-    @PreAuthorize("@ss.hasPermi('system:expenses:add')")
     @Log(title = "项目费用记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody FundProjectExpenses fundProjectExpenses)
@@ -83,7 +79,6 @@ public class FundProjectExpensesController extends BaseController
     /**
      * 修改项目费用记录
      */
-    @PreAuthorize("@ss.hasPermi('system:expenses:edit')")
     @Log(title = "项目费用记录", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody FundProjectExpenses fundProjectExpenses)
@@ -94,7 +89,6 @@ public class FundProjectExpensesController extends BaseController
     /**
      * 删除项目费用记录
      */
-    @PreAuthorize("@ss.hasPermi('system:expenses:remove')")
     @Log(title = "项目费用记录", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable String[] ids)

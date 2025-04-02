@@ -44,7 +44,6 @@ public class FundProjectReviewsController extends BaseController
     /**
      * 查询项目评审记录列表
      */
-    @PreAuthorize("@ss.hasPermi('system:reviews:list')")
     @GetMapping("/list")
     public TableDataInfo list(FundProjectReviews fundProjectReviews)
     {
@@ -61,7 +60,6 @@ public class FundProjectReviewsController extends BaseController
     /**
      * 导出项目评审记录列表
      */
-    @PreAuthorize("@ss.hasPermi('system:reviews:export')")
     @Log(title = "项目评审记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, FundProjectReviews fundProjectReviews)
@@ -74,7 +72,6 @@ public class FundProjectReviewsController extends BaseController
     /**
      * 获取项目评审记录详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:reviews:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") String id)
     {
@@ -84,7 +81,6 @@ public class FundProjectReviewsController extends BaseController
     /**
      * 新增项目评审记录
      */
-    @PreAuthorize("@ss.hasPermi('system:reviews:add')")
     @Log(title = "项目评审记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody FundProjectReviews fundProjectReviews)
@@ -95,7 +91,6 @@ public class FundProjectReviewsController extends BaseController
     /**
      * 修改项目评审记录
      */
-    @PreAuthorize("@ss.hasPermi('system:reviews:edit')")
     @Log(title = "项目评审记录", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody FundProjectReviews fundProjectReviews)
@@ -106,7 +101,6 @@ public class FundProjectReviewsController extends BaseController
     /**
      * 删除项目评审记录
      */
-    @PreAuthorize("@ss.hasPermi('system:reviews:remove')")
     @Log(title = "项目评审记录", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable String[] ids)

@@ -37,7 +37,7 @@ public class FundAlertsController extends BaseController
     /**
      * 查询系统预警提醒列表
      */
-    @PreAuthorize("@ss.hasPermi('system:alerts:list')")
+
     @GetMapping("/list")
     public TableDataInfo list(FundAlerts fundAlerts)
     {
@@ -49,7 +49,7 @@ public class FundAlertsController extends BaseController
     /**
      * 导出系统预警提醒列表
      */
-    @PreAuthorize("@ss.hasPermi('system:alerts:export')")
+
     @Log(title = "系统预警提醒", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, FundAlerts fundAlerts)
@@ -62,7 +62,7 @@ public class FundAlertsController extends BaseController
     /**
      * 获取系统预警提醒详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:alerts:query')")
+
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") String id)
     {
@@ -72,7 +72,7 @@ public class FundAlertsController extends BaseController
     /**
      * 新增系统预警提醒
      */
-    @PreAuthorize("@ss.hasPermi('system:alerts:add')")
+
     @Log(title = "系统预警提醒", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody FundAlerts fundAlerts)
@@ -83,7 +83,7 @@ public class FundAlertsController extends BaseController
     /**
      * 修改系统预警提醒
      */
-    @PreAuthorize("@ss.hasPermi('system:alerts:edit')")
+
     @Log(title = "系统预警提醒", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody FundAlerts fundAlerts)
@@ -94,7 +94,7 @@ public class FundAlertsController extends BaseController
     /**
      * 删除系统预警提醒
      */
-    @PreAuthorize("@ss.hasPermi('system:alerts:remove')")
+
     @Log(title = "系统预警提醒", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable String[] ids)

@@ -42,7 +42,6 @@ public class FundProjectsController extends BaseController
     /**
      * 查询项目基本信息列表
      */
-    @PreAuthorize("@ss.hasPermi('system:projects:list')")
     @GetMapping("/list")
     public TableDataInfo list(FundProjects fundProjects)
     {
@@ -57,7 +56,6 @@ public class FundProjectsController extends BaseController
     /**
      * 导出项目基本信息列表
      */
-    @PreAuthorize("@ss.hasPermi('system:projects:export')")
     @Log(title = "项目基本信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, FundProjects fundProjects)
@@ -70,7 +68,6 @@ public class FundProjectsController extends BaseController
     /**
      * 获取项目基本信息详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:projects:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") String id)
     {
@@ -80,7 +77,6 @@ public class FundProjectsController extends BaseController
     /**
      * 新增项目基本信息
      */
-    @PreAuthorize("@ss.hasPermi('system:projects:add')")
     @Log(title = "项目基本信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody FundProjects fundProjects)
@@ -95,7 +91,6 @@ public class FundProjectsController extends BaseController
     /**
      * 修改项目基本信息
      */
-    @PreAuthorize("@ss.hasPermi('system:projects:edit')")
     @Log(title = "项目基本信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody FundProjects fundProjects)
@@ -106,7 +101,6 @@ public class FundProjectsController extends BaseController
     /**
      * 删除项目基本信息
      */
-    @PreAuthorize("@ss.hasPermi('system:projects:remove')")
     @Log(title = "项目基本信息", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable String[] ids)

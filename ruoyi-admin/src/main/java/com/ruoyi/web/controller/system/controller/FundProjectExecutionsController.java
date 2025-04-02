@@ -5,8 +5,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.web.controller.system.domain.FundProjectAcceptances;
 import com.ruoyi.web.controller.system.domain.FundProjectExpenses;
 import com.ruoyi.web.controller.system.domain.FundProjects;
+import com.ruoyi.web.controller.system.service.IFundProjectAcceptancesService;
 import com.ruoyi.web.controller.system.service.IFundProjectExpensesService;
 import com.ruoyi.web.controller.system.service.IFundProjectsService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,10 +48,12 @@ public class FundProjectExecutionsController extends BaseController
     private ISysUserService sysUserService;
     @Autowired
     private IFundProjectExpensesService fundProjectExpensesService;
+    @Autowired
+    private IFundProjectAcceptancesService fundProjectAcceptancesService;
     /**
      * 查询项目执行记录列表
      */
-    @PreAuthorize("@ss.hasPermi('system:executions:list')")
+
     @GetMapping("/list")
     public TableDataInfo list(FundProjectExecutions fundProjectExecutions)
     {
@@ -86,7 +90,7 @@ public class FundProjectExecutionsController extends BaseController
     /**
      * 导出项目执行记录列表
      */
-    @PreAuthorize("@ss.hasPermi('system:executions:export')")
+
     @Log(title = "项目执行记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, FundProjectExecutions fundProjectExecutions)
@@ -99,7 +103,7 @@ public class FundProjectExecutionsController extends BaseController
     /**
      * 获取项目执行记录详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:executions:query')")
+
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") String id)
     {
@@ -128,7 +132,7 @@ public class FundProjectExecutionsController extends BaseController
     /**
      * 新增项目执行记录
      */
-    @PreAuthorize("@ss.hasPermi('system:executions:add')")
+
     @Log(title = "项目执行记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody FundProjectExecutions fundProjectExecutions)
@@ -139,18 +143,27 @@ public class FundProjectExecutionsController extends BaseController
     /**
      * 修改项目执行记录
      */
-    @PreAuthorize("@ss.hasPermi('system:executions:edit')")
     @Log(title = "项目执行记录", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody FundProjectExecutions fundProjectExecutions)
     {
+        if(fundProjectExecutions.getProgress()==100L){
+            fundProjectExecutions.setExecutionStatus("已完成");
+            FundProjects fundProjects = fundProjectsService.selectFundProjectsById(fundProjectExecutions.getProjectId());
+            fundProjects.setStatus("验收中");
+            fundProjectsService.updateFundProjects(fundProjects);
+
+            FundProjectAcceptances fundProjectAcceptances = new FundProjectAcceptances();
+            fundProjectAcceptances.setProjectId(fundProjectExecutions.getProjectId());
+            fundProjectAcceptances.setAcceptanceStatus("待验收");
+            fundProjectAcceptancesService.insertFundProjectAcceptances(fundProjectAcceptances);
+        }
         return toAjax(fundProjectExecutionsService.updateFundProjectExecutions(fundProjectExecutions));
     }
 
     /**
      * 删除项目执行记录
      */
-    @PreAuthorize("@ss.hasPermi('system:executions:remove')")
     @Log(title = "项目执行记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable String[] ids)

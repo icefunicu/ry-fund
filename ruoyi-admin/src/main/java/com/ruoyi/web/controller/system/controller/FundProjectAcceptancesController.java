@@ -2,6 +2,9 @@ package com.ruoyi.web.controller.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.web.controller.system.domain.FundProjects;
+import com.ruoyi.web.controller.system.service.IFundProjectsService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,11 +36,12 @@ public class FundProjectAcceptancesController extends BaseController
 {
     @Autowired
     private IFundProjectAcceptancesService fundProjectAcceptancesService;
-
+    @Autowired
+    private IFundProjectsService fundProjectsService;
     /**
      * 查询项目验收记录列表
      */
-    @PreAuthorize("@ss.hasPermi('system:acceptances:list')")
+
     @GetMapping("/list")
     public TableDataInfo list(FundProjectAcceptances fundProjectAcceptances)
     {
@@ -49,7 +53,7 @@ public class FundProjectAcceptancesController extends BaseController
     /**
      * 导出项目验收记录列表
      */
-    @PreAuthorize("@ss.hasPermi('system:acceptances:export')")
+
     @Log(title = "项目验收记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, FundProjectAcceptances fundProjectAcceptances)
@@ -62,7 +66,7 @@ public class FundProjectAcceptancesController extends BaseController
     /**
      * 获取项目验收记录详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:acceptances:query')")
+
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") String id)
     {
@@ -72,7 +76,7 @@ public class FundProjectAcceptancesController extends BaseController
     /**
      * 新增项目验收记录
      */
-    @PreAuthorize("@ss.hasPermi('system:acceptances:add')")
+
     @Log(title = "项目验收记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody FundProjectAcceptances fundProjectAcceptances)
@@ -83,7 +87,7 @@ public class FundProjectAcceptancesController extends BaseController
     /**
      * 修改项目验收记录
      */
-    @PreAuthorize("@ss.hasPermi('system:acceptances:edit')")
+
     @Log(title = "项目验收记录", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody FundProjectAcceptances fundProjectAcceptances)
@@ -94,11 +98,37 @@ public class FundProjectAcceptancesController extends BaseController
     /**
      * 删除项目验收记录
      */
-    @PreAuthorize("@ss.hasPermi('system:acceptances:remove')")
+
     @Log(title = "项目验收记录", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable String[] ids)
     {
         return toAjax(fundProjectAcceptancesService.deleteFundProjectAcceptancesByIds(ids));
+    }
+
+    /**
+     * 验收通过
+     * */
+    @PostMapping("/submit")
+    public AjaxResult submit(@RequestBody FundProjectAcceptances fundProjectAcceptances){
+        fundProjectAcceptances.setAcceptanceStatus("通过");
+        String projectId = fundProjectAcceptances.getProjectId();
+        FundProjects fundProjects = fundProjectsService.selectFundProjectsById(projectId);
+        fundProjects.setStatus("完成");
+        fundProjectsService.updateFundProjects(fundProjects);
+        return toAjax(fundProjectAcceptancesService.updateFundProjectAcceptances(fundProjectAcceptances));
+    }
+    /**
+     *
+     * 验收不通过
+    * */
+    @PostMapping("/reject")
+    public AjaxResult reject(@RequestBody FundProjectAcceptances fundProjectAcceptances){
+        fundProjectAcceptances.setAcceptanceStatus("未通过");
+        String projectId = fundProjectAcceptances.getProjectId();
+        FundProjects fundProjects = fundProjectsService.selectFundProjectsById(projectId);
+        fundProjects.setStatus("驳回");
+        fundProjectsService.updateFundProjects(fundProjects);
+        return toAjax(fundProjectAcceptancesService.updateFundProjectAcceptances(fundProjectAcceptances));
     }
 }

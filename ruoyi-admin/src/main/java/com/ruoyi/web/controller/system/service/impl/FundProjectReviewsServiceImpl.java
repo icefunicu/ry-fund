@@ -109,7 +109,7 @@ public class FundProjectReviewsServiceImpl implements IFundProjectReviewsService
         fundProjectsMapper.updateFundProjects(fundProjects);
         FundProjectExecutions fundProjectExecutions = new FundProjectExecutions();
         fundProjectExecutions.setProjectId(fundProjectReviews.getProjectId());
-        fundProjectExecutions.setExecutionStatus("未开始");
+        fundProjectExecutions.setExecutionStatus("进行中");
         fundProjectExecutions.setProgress(0L);
         fundProjectExecutionsMapper.insertFundProjectExecutions(fundProjectExecutions);
         return fundProjectReviewsMapper.insertFundProjectReviews(fundProjectReviews);

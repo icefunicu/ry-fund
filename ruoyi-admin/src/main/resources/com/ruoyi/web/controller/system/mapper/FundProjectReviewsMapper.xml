@@ -7,24 +7,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="FundProjectReviews" id="FundProjectReviewsResult">
         <result property="id"    column="id"    />
         <result property="projectId"    column="project_id"    />
-        <result property="expertId"    column="expert_id"    />
-        <result property="score"    column="score"    />
-        <result property="comments"    column="comments"    />
-        <result property="reviewDate"    column="review_date"    />
     </resultMap>
 
     <sql id="selectFundProjectReviewsVo">
-        select id, project_id, expert_id, score, comments, review_date from fund_project_reviews
+        select id, project_id from fund_project_reviews
     </sql>
 
     <select id="selectFundProjectReviewsList" parameterType="FundProjectReviews" resultMap="FundProjectReviewsResult">
         <include refid="selectFundProjectReviewsVo"/>
         <where>
             <if test="projectId != null  and projectId != ''"> and project_id = #{projectId}</if>
-            <if test="expertId != null  and expertId != ''"> and expert_id = #{expertId}</if>
-            <if test="score != null "> and score = #{score}</if>
-            <if test="comments != null  and comments != ''"> and comments = #{comments}</if>
-            <if test="reviewDate != null "> and review_date = #{reviewDate}</if>
         </where>
     </select>
 
@@ -37,17 +29,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into fund_project_reviews
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="projectId != null and projectId != ''">project_id,</if>
-            <if test="expertId != null and expertId != ''">expert_id,</if>
-            <if test="score != null">score,</if>
-            <if test="comments != null">comments,</if>
-            <if test="reviewDate != null">review_date,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="projectId != null and projectId != ''">#{projectId},</if>
-            <if test="expertId != null and expertId != ''">#{expertId},</if>
-            <if test="score != null">#{score},</if>
-            <if test="comments != null">#{comments},</if>
-            <if test="reviewDate != null">#{reviewDate},</if>
          </trim>
     </insert>
 
@@ -55,10 +39,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update fund_project_reviews
         <trim prefix="SET" suffixOverrides=",">
             <if test="projectId != null and projectId != ''">project_id = #{projectId},</if>
-            <if test="expertId != null and expertId != ''">expert_id = #{expertId},</if>
-            <if test="score != null">score = #{score},</if>
-            <if test="comments != null">comments = #{comments},</if>
-            <if test="reviewDate != null">review_date = #{reviewDate},</if>
         </trim>
         where id = #{id}
     </update>

@@ -70,11 +70,9 @@ public class FundProjectExecutionsController extends BaseController
             }
             fundProjects.setUsedFund(usedFund);
             // 计算已使用经费率
-            if(usedFund.equals(BigDecimal.ZERO)){
-                fundProjects.setusedFundProgress(BigDecimal.ZERO);
-            }else{
-                fundProjects.setusedFundProgress(fundProjects.getBudget().divide(fundProjects.getUsedFund(), 2, BigDecimal.ROUND_HALF_UP));
-            }
+
+            fundProjects.setusedFundProgress(fundProjects.getUsedFund().divide(fundProjects.getBudget(), 2, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("100")));
+
             fundProjectExecutions1.setFundProjectExpenses(fundProjectExpenses1);
 
         }

@@ -153,7 +153,7 @@ public class FundProjectExecutionsController extends BaseController
     public AjaxResult edit(@RequestBody FundProjectExecutions fundProjectExecutions)
     {
         if(fundProjectExecutions.getProgress()==100L){
-            fundProjectExecutions.setExecutionStatus("已完成");
+            fundProjectExecutions.setExecutionStatus("完成");
             FundProjects fundProjects = fundProjectsService.selectFundProjectsById(fundProjectExecutions.getProjectId());
             fundProjects.setStatus("验收中");
             fundProjectsService.updateFundProjects(fundProjects);

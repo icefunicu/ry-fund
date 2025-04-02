@@ -69,7 +69,9 @@ public class FundProjectExecutionsController extends BaseController
                 usedFund = usedFund.add(fundProjectExpenses2.getExpenseAmount());
             }
             fundProjects.setUsedFund(usedFund);
-            fundProjects.setusedFundProgress(fundProjects.getUsedFund().divide(fundProjects.getBudget(), 2, BigDecimal.ROUND_HALF_UP));
+            // 计算已使用经费率
+
+            fundProjects.setusedFundProgress(fundProjects.getBudget().divide(fundProjects.getUsedFund(), 2, BigDecimal.ROUND_HALF_UP));
 
             fundProjectExecutions1.setFundProjectExpenses(fundProjectExpenses1);
 

@@ -57,6 +57,10 @@ public class FundProjectExecutionsController extends BaseController
         List<FundProjectExecutions> list = fundProjectExecutionsService.selectFundProjectExecutionsList(fundProjectExecutions);
         for(FundProjectExecutions fundProjectExecutions1 : list){
             FundProjects fundProjects = fundProjectsService.selectFundProjectsById(fundProjectExecutions1.getProjectId());
+            if (fundProjects.getStatus()!="执行中"){
+                list.remove(fundProjectExecutions1);
+                continue;
+            }
             fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getNickName());
             fundProjectExecutions1.setFundProjects(fundProjects);
 

@@ -69,6 +69,7 @@ public class FundProjectExecutionsController extends BaseController
                 usedFund = usedFund.add(fundProjectExpenses2.getExpenseAmount());
             }
             fundProjects.setUsedFund(usedFund);
+            fundProjects.setusedFundProgress(fundProjects.getUsedFund().divide(fundProjects.getBudget(), 2, BigDecimal.ROUND_HALF_UP));
 
             fundProjectExecutions1.setFundProjectExpenses(fundProjectExpenses1);
 
@@ -126,7 +127,7 @@ public class FundProjectExecutionsController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:executions:remove')")
     @Log(title = "项目执行记录", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable String[] ids)
     {
         return toAjax(fundProjectExecutionsService.deleteFundProjectExecutionsByIds(ids));

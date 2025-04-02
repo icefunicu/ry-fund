@@ -75,6 +75,14 @@ public class FundProjects extends BaseEntity
     private Date updatedAt;
     //已使用金额
     private BigDecimal usedFund;
+    //使用金额百分比
+    private BigDecimal usedFundProgress;
+    public BigDecimal getusedFundProgress() {
+        return usedFundProgress;
+    }
+    public void setusedFundProgress(BigDecimal usedFundPercentage) {
+        this.usedFundProgress = usedFundPercentage;
+    }
     public BigDecimal getUsedFund() {
         return usedFund;
     }

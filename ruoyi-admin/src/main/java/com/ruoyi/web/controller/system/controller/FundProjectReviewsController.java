@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.web.controller.system.domain.FundProjects;
 import com.ruoyi.web.controller.system.service.IFundProjectsService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

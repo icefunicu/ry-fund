@@ -100,4 +100,22 @@ public class FundProjectsServiceImpl implements IFundProjectsService
         fundProjects.setStatus("评审中");
         return fundProjectsMapper.updateFundProjects(fundProjects);
     }
+    /**
+     * 通过接口，项目进入完成状态
+     * */
+    @Override
+    public int acceptance(FundProjects fundProjects) {
+        fundProjects = fundProjectsMapper.selectFundProjectsById(fundProjects.getId());
+        fundProjects.setStatus("完成");
+        return fundProjectsMapper.updateFundProjects(fundProjects);
+    }
+    /**
+     * 驳回接口，项目进入驳回状态
+     * */
+    @Override
+    public int reject(FundProjects fundProjects) {
+        fundProjects = fundProjectsMapper.selectFundProjectsById(fundProjects.getId());
+        fundProjects.setStatus("驳回");
+        return fundProjectsMapper.updateFundProjects(fundProjects);
+    }
 }

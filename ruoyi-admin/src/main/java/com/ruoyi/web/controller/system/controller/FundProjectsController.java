@@ -116,5 +116,18 @@ public class FundProjectsController extends BaseController
     {
         return toAjax(fundProjectsService.submitFundProjects(fundProjects));
     }
-
+    /**
+     *  项目验收通过接口，修改项目状态为完成
+     * */
+    @PostMapping("/acceptance")
+    public AjaxResult acceptance(@RequestBody FundProjects fundProjects) {
+        return toAjax(fundProjectsService.acceptance(fundProjects));
+    }
+    /**
+     *  项目验收不通过接口，修改项目状态为驳回
+     * */
+    @PostMapping("/reject")
+    public AjaxResult reject(@RequestBody FundProjects fundProjects) {
+        return toAjax(fundProjectsService.reject(fundProjects));
+    }
 }

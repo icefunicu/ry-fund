@@ -62,4 +62,12 @@ public interface IFundProjectsService
     * 提交项目，进入审核状态
     * */
     int submitFundProjects(FundProjects fundProjects);
+    /**
+     * 通过接口，项目进入完成状态
+     * */
+    int acceptance(FundProjects fundProjects);
+    /**
+     * 驳回接口，项目进入驳回状态
+     * */
+    int reject(FundProjects fundProjects);
 }

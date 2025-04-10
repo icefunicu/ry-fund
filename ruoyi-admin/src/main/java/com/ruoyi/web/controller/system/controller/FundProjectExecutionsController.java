@@ -111,7 +111,10 @@ public class FundProjectExecutionsController extends BaseController
             fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getNickName());
             // 将deadline从时间戳格式转换为 yyyy-MM-dd
             fundProjects.setDeadline(new java.sql.Date(fundProjects.getDeadline().getTime()));
-            if(!fundProjects.getStatus().equals("验收中")||!fundProjects.getStatus().equals("完成")){
+            if(!fundProjects.getStatus().equals("验收中")){
+                continue;
+            }
+            if(!fundProjects.getStatus().equals("完成")){
                 continue;
             }
             fundProjectExecutions1.setFundProjects(fundProjects);

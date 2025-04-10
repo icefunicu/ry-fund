@@ -113,10 +113,10 @@ public class FundProjectExecutionsController extends BaseController
             fundProjects.setDeadline(new java.sql.Date(fundProjects.getDeadline().getTime()));
             if(!fundProjects.getStatus().equals("验收中")){
                 continue;
-            }
-            if(!fundProjects.getStatus().equals("完成")){
+            }else if(!fundProjects.getStatus().equals("完成")){
                 continue;
             }
+
             fundProjectExecutions1.setFundProjects(fundProjects);
 
             FundProjectExpenses fundProjectExpenses = new FundProjectExpenses();

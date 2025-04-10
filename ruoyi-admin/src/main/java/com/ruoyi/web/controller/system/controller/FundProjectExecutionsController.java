@@ -93,6 +93,48 @@ public class FundProjectExecutionsController extends BaseController
     }
 
     /**
+     * 查询项目验收记录列表
+     */
+
+    @GetMapping("/YSlist")
+    public TableDataInfo YSlist(FundProjectExecutions fundProjectExecutions)
+    {
+        startPage();
+        List<FundProjectExecutions> list = fundProjectExecutionsService.selectFundProjectExecutionsList(fundProjectExecutions);
+        List<FundProjectExecutions> newlist = new ArrayList<>();
+        for(FundProjectExecutions fundProjectExecutions1 : list){
+
+            FundProjects fundProjects = fundProjectsService.selectFundProjectsById(fundProjectExecutions1.getProjectId());
+//            if (!Objects.equals(fundProjects.getStatus(), "执行中")){
+//                continue;
+//            }
+            fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getNickName());
+            // 将deadline从时间戳格式转换为 yyyy-MM-dd
+            fundProjects.setDeadline(new java.sql.Date(fundProjects.getDeadline().getTime()));
+            if(!fundProjects.getStatus().equals("验收中")||!fundProjects.getStatus().equals("完成")){
+                continue;
+            }
+            fundProjectExecutions1.setFundProjects(fundProjects);
+
+            FundProjectExpenses fundProjectExpenses = new FundProjectExpenses();
+            fundProjectExpenses.setProjectId(fundProjects.getId());
+            List<FundProjectExpenses> fundProjectExpenses1 = fundProjectExpensesService.selectFundProjectExpensesList(fundProjectExpenses);
+            BigDecimal usedFund = new BigDecimal(0);
+            // 遍历
+            for (FundProjectExpenses fundProjectExpenses2 : fundProjectExpenses1) {
+                usedFund = usedFund.add(fundProjectExpenses2.getExpenseAmount());
+            }
+            fundProjects.setUsedFund(usedFund);
+            // 计算已使用经费率
+
+            fundProjects.setusedFundProgress(fundProjects.getUsedFund().divide(fundProjects.getBudget(), 2, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("100")));
+
+            fundProjectExecutions1.setFundProjectExpenses(fundProjectExpenses1);
+            newlist.add(fundProjectExecutions1);
+        }
+        return getDataTable(newlist);
+    }
+    /**
      * 导出项目执行记录列表
      */
 

@@ -71,6 +71,8 @@ public class FundProjects extends BaseEntity
     @Excel(name = "记录创建时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date createdAt;
 
+    /** 记录实际完成时间 */
+    private Date endDate;
     /** 记录更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "记录更新时间", width = 30, dateFormat = "yyyy-MM-dd")
@@ -83,6 +85,12 @@ public class FundProjects extends BaseEntity
     private List<FundProjectExpenses> fundProjectExpensesList;
     public List<FundProjectExpenses> getFundProjectExpensesList() {
         return fundProjectExpensesList;
+    }
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+    public Date getEndDate() {
+        return endDate;
     }
     public void setFundProjectExpensesList(List<FundProjectExpenses> fundProjectExpensesList) {
         this.fundProjectExpensesList = fundProjectExpensesList;

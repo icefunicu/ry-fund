@@ -103,6 +103,7 @@ public class FundProjectExecutionsServiceImpl implements IFundProjectExecutionsS
     public int submitFundProjectExecutions(FundProjectExecutions fundProjectExecutions){
         FundProjects fundProjects = fundProjectsMapper.selectFundProjectsById(fundProjectExecutions.getProjectId());
         fundProjects.setStatus("验收中");
+        fundProjects.setEndDate(DateUtils.getNowDate());
         fundProjectsMapper.updateFundProjects(fundProjects);
         fundProjectExecutions.setExecutionStatus("完成");
         return fundProjectExecutionsMapper.updateFundProjectExecutions(fundProjectExecutions);

@@ -18,10 +18,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="budget"    column="budget"    />
         <result property="createdAt"    column="created_at"    />
         <result property="updatedAt"    column="updated_at"    />
+        <result property="endDate" column="end_date" />
     </resultMap>
 
     <sql id="selectFundProjectsVo">
-        select id, applicant_id, title, description, application_file, demonstration_file, apply_date, status, start_date, deadline, budget, created_at, updated_at from fund_projects
+        select id, applicant_id, title, description, application_file, demonstration_file, apply_date, status, start_date, deadline, budget, created_at, updated_at ,end_date from fund_projects
     </sql>
 
     <select id="selectFundProjectsList" parameterType="FundProjects" resultMap="FundProjectsResult">
@@ -62,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="budget != null">budget,</if>
             <if test="createdAt != null">created_at,</if>
             <if test="updatedAt != null">updated_at,</if>
+            <if test="endDate != null">end_date,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="applicantId != null and applicantId != ''">#{applicantId},</if>
@@ -76,6 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="budget != null">#{budget},</if>
             <if test="createdAt != null">#{createdAt},</if>
             <if test="updatedAt != null">#{updatedAt},</if>
+            <if test="endDate != null">#{endDate},</if>
          </trim>
     </insert>
 
@@ -94,6 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="budget != null">budget = #{budget},</if>
             <if test="createdAt != null">created_at = #{createdAt},</if>
             <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
         </trim>
         where id = #{id}
     </update>

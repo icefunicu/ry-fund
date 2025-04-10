@@ -108,32 +108,28 @@ public class FundProjectExecutionsController extends BaseController
 //            if (!Objects.equals(fundProjects.getStatus(), "执行中")){
 //                continue;
 //            }
-            fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getNickName());
-            // 将deadline从时间戳格式转换为 yyyy-MM-dd
-            fundProjects.setDeadline(new java.sql.Date(fundProjects.getDeadline().getTime()));
-            if(!fundProjects.getStatus().equals("验收中")){
-                continue;
-            }else if(!fundProjects.getStatus().equals("完成")){
-                continue;
+            if (fundProjects.getStatus().equals("验收中")||  fundProjects.getStatus().equals("完成")){
+                fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getNickName());
+                // 将deadline从时间戳格式转换为 yyyy-MM-dd
+                fundProjects.setDeadline(new java.sql.Date(fundProjects.getDeadline().getTime()));
+                fundProjectExecutions1.setFundProjects(fundProjects);
+
+                FundProjectExpenses fundProjectExpenses = new FundProjectExpenses();
+                fundProjectExpenses.setProjectId(fundProjects.getId());
+                List<FundProjectExpenses> fundProjectExpenses1 = fundProjectExpensesService.selectFundProjectExpensesList(fundProjectExpenses);
+                BigDecimal usedFund = new BigDecimal(0);
+                // 遍历
+                for (FundProjectExpenses fundProjectExpenses2 : fundProjectExpenses1) {
+                    usedFund = usedFund.add(fundProjectExpenses2.getExpenseAmount());
+                }
+                fundProjects.setUsedFund(usedFund);
+                // 计算已使用经费率
+
+                fundProjects.setusedFundProgress(fundProjects.getUsedFund().divide(fundProjects.getBudget(), 2, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("100")));
+
+                fundProjectExecutions1.setFundProjectExpenses(fundProjectExpenses1);
+                newlist.add(fundProjectExecutions1);
             }
-
-            fundProjectExecutions1.setFundProjects(fundProjects);
-
-            FundProjectExpenses fundProjectExpenses = new FundProjectExpenses();
-            fundProjectExpenses.setProjectId(fundProjects.getId());
-            List<FundProjectExpenses> fundProjectExpenses1 = fundProjectExpensesService.selectFundProjectExpensesList(fundProjectExpenses);
-            BigDecimal usedFund = new BigDecimal(0);
-            // 遍历
-            for (FundProjectExpenses fundProjectExpenses2 : fundProjectExpenses1) {
-                usedFund = usedFund.add(fundProjectExpenses2.getExpenseAmount());
-            }
-            fundProjects.setUsedFund(usedFund);
-            // 计算已使用经费率
-
-            fundProjects.setusedFundProgress(fundProjects.getUsedFund().divide(fundProjects.getBudget(), 2, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("100")));
-
-            fundProjectExecutions1.setFundProjectExpenses(fundProjectExpenses1);
-            newlist.add(fundProjectExecutions1);
         }
         return getDataTable(newlist);
     }

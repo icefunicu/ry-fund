@@ -109,11 +109,11 @@ public class FundProjectAcceptancesController extends BaseController
             StringBuilder sb = new StringBuilder();
             sb.append(fundProjectAcceptances1.getReviewComments()).append("###").append(fundProjectAcceptances.getReviewComments());
             fundProjectAcceptances1.setReviewComments(sb.toString());
-            fundProjectAcceptances.setAcceptanceStatus("未通过");
+            fundProjectAcceptances1.setAcceptanceStatus("未通过");
             FundProjects fundProjects = fundProjectsService.selectFundProjectsById(projectId);
             fundProjects.setStatus("驳回");
             fundProjectsService.updateFundProjects(fundProjects);
-            return toAjax(fundProjectAcceptancesService.updateFundProjectAcceptances(fundProjectAcceptances)) ;
+            return toAjax(fundProjectAcceptancesService.updateFundProjectAcceptances(fundProjectAcceptances1)) ;
         }
     }
 

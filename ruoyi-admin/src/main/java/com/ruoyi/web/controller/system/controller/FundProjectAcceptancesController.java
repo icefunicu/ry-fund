@@ -50,6 +50,14 @@ public class FundProjectAcceptancesController extends BaseController
         return getDataTable(list);
     }
 
+    @PostMapping("/list")
+    public TableDataInfo list2(FundProjectAcceptances fundProjectAcceptances)
+    {
+        startPage();
+        List<FundProjectAcceptances> list = fundProjectAcceptancesService.selectFundProjectAcceptancesList(fundProjectAcceptances);
+        return getDataTable(list);
+    }
+
     /**
      * 导出项目验收记录列表
      */

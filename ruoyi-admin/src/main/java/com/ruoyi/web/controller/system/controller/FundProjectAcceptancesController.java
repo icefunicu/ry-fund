@@ -50,8 +50,8 @@ public class FundProjectAcceptancesController extends BaseController
         return getDataTable(list);
     }
 
-    @PostMapping("/list")
-    public TableDataInfo list2(FundProjectAcceptances fundProjectAcceptances)
+    @PostMapping("/listbyid")
+    public TableDataInfo listById(FundProjectAcceptances fundProjectAcceptances)
     {
         startPage();
         List<FundProjectAcceptances> list = fundProjectAcceptancesService.selectFundProjectAcceptancesList(fundProjectAcceptances);

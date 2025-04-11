@@ -36,6 +36,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectFundProjectAcceptancesVo"/>
         where id = #{id}
     </select>
+    <select id="selectFundProjectAcceptancesByProjectId"
+            parameterType="String" resultMap="FundProjectAcceptancesResult">
+        <include refid="selectFundProjectAcceptancesVo"/>
+        where project_id = #{projectId}
+    </select>
 
     <insert id="insertFundProjectAcceptances" parameterType="FundProjectAcceptances" useGeneratedKeys="true" keyProperty="id">
         insert into fund_project_acceptances

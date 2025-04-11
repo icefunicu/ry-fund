@@ -90,4 +90,9 @@ public class FundProjectAcceptancesServiceImpl implements IFundProjectAcceptance
     {
         return fundProjectAcceptancesMapper.deleteFundProjectAcceptancesById(id);
     }
+
+    @Override
+    public FundProjectAcceptances selectFundProjectAcceptancesByProjectId(String projectId) {
+        return fundProjectAcceptancesMapper.selectFundProjectAcceptancesByProjectId(projectId);
+    }
 }

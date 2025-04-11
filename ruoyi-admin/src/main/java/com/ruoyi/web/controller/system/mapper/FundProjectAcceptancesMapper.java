@@ -58,4 +58,6 @@ public interface FundProjectAcceptancesMapper
      * @return 结果
      */
     public int deleteFundProjectAcceptancesByIds(String[] ids);
+
+    FundProjectAcceptances selectFundProjectAcceptancesByProjectId(String projectId);
 }

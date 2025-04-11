@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.web.controller.system.domain.FundProjectAcceptances;
 import com.ruoyi.web.controller.system.domain.FundProjectExpenses;
@@ -198,6 +199,7 @@ public class FundProjectExecutionsController extends BaseController
             fundProjectExecutions.setExecutionStatus("完成");
             FundProjects fundProjects = fundProjectsService.selectFundProjectsById(fundProjectExecutions.getProjectId());
             fundProjects.setStatus("验收中");
+            fundProjects.setEndDate(DateUtils.getNowDate());
             fundProjectsService.updateFundProjects(fundProjects);
 
             FundProjectAcceptances fundProjectAcceptances = new FundProjectAcceptances();

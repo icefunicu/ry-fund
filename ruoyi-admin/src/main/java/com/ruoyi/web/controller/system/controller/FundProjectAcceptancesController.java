@@ -96,16 +96,23 @@ public class FundProjectAcceptancesController extends BaseController
      * */
     @PostMapping("/rejectOpinion")
     public AjaxResult rejectOpinion(@RequestBody FundProjectAcceptances fundProjectAcceptances){
-        fundProjectAcceptances.setAcceptanceStatus("驳回");
         String projectId = fundProjectAcceptances.getProjectId();
         //判断数据库中是否有相关的项目验收记录，如果没有就新增，有就修改
         FundProjectAcceptances fundProjectAcceptances1 = fundProjectAcceptancesService.selectFundProjectAcceptancesById(projectId);
         if(fundProjectAcceptances1==null){
+            fundProjectAcceptances.setAcceptanceStatus("未通过");
+            FundProjects fundProjects = fundProjectsService.selectFundProjectsById(projectId);
+            fundProjects.setStatus("驳回");
+            fundProjectsService.updateFundProjects(fundProjects);
             return toAjax(fundProjectAcceptancesService.insertFundProjectAcceptances(fundProjectAcceptances)) ;
         }else{
             StringBuilder sb = new StringBuilder();
             sb.append(fundProjectAcceptances1.getReviewComments()).append("###").append(fundProjectAcceptances.getReviewComments());
             fundProjectAcceptances1.setReviewComments(sb.toString());
+            fundProjectAcceptances.setAcceptanceStatus("未通过");
+            FundProjects fundProjects = fundProjectsService.selectFundProjectsById(projectId);
+            fundProjects.setStatus("驳回");
+            fundProjectsService.updateFundProjects(fundProjects);
             return toAjax(fundProjectAcceptancesService.updateFundProjectAcceptances(fundProjectAcceptances)) ;
         }
     }

@@ -51,7 +51,7 @@ public class FundProjectAcceptancesController extends BaseController
     }
 
     @PostMapping("/listbyid")
-    public TableDataInfo listById(FundProjectAcceptances fundProjectAcceptances)
+    public TableDataInfo listById(@RequestBody FundProjectAcceptances fundProjectAcceptances)
     {
         startPage();
         List<FundProjectAcceptances> list = fundProjectAcceptancesService.selectFundProjectAcceptancesList(fundProjectAcceptances);

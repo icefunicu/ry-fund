@@ -114,8 +114,12 @@ public class FundProjectAcceptancesController extends BaseController
             return toAjax(fundProjectAcceptancesService.insertFundProjectAcceptances(fundProjectAcceptances)) ;
         }else{
             StringBuilder sb = new StringBuilder();
-            sb.append(fundProjectAcceptances1.getReviewComments()).append("###").append(fundProjectAcceptances.getReviewComments());
-            fundProjectAcceptances1.setReviewComments(sb.toString());
+            if (fundProjectAcceptances1.getReviewComments() == null){
+                fundProjectAcceptances1.setReviewComments(fundProjectAcceptances.getReviewComments());
+            }else {
+                sb.append(fundProjectAcceptances1.getReviewComments()).append("###").append(fundProjectAcceptances.getReviewComments());
+                fundProjectAcceptances1.setReviewComments(sb.toString());
+            }
             fundProjectAcceptances1.setAcceptanceStatus("未通过");
             FundProjects fundProjects = fundProjectsService.selectFundProjectsById(projectId);
             fundProjects.setStatus("驳回");

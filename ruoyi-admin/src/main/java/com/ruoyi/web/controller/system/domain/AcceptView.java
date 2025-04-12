@@ -11,5 +11,5 @@ import lombok.Data;
 public class AcceptView {
    int checkingProjectCount;
    int passedProjectCount;
-   int passRate;
+   float passRate;
 }

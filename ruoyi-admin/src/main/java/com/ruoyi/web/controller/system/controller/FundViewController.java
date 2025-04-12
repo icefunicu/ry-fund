@@ -54,10 +54,10 @@ public class FundViewController {
         int checkingCount = fundViewService.selectCheckingTotalCount();
         int passedCount = fundViewService.selectPassedTotalCount();
 
-        int passRate = 0;
+        float passRate = 0;
 
         if(checkingCount>0){
-            passRate = passedCount * 100 / fundViewService.selectPassAndRejectCount() ;
+            passRate = (float) (passedCount * 100) / fundViewService.selectPassAndRejectCount() ;
         }
         AcceptView acceptView = new AcceptView();
         acceptView.setCheckingProjectCount(checkingCount);

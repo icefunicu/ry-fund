@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.system.controller;
 
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.web.controller.system.domain.FundViewVo;
 import com.ruoyi.web.controller.system.service.FundViewService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ public class FundViewController {
 
     //首页大屏数据展示接口
     @RequestMapping("/index")
-    public FundViewVo index(){
+    public AjaxResult index(){
         FundViewVo fundViewVo = new FundViewVo();
         //查询项目列表
         fundViewVo.setFundProjectsList(fundViewService.selectFundProjectsList());
@@ -32,7 +33,7 @@ public class FundViewController {
         fundViewVo.setAlertsList(fundViewService.selectAlertsList());
         //查询支出类型统计列表
         fundViewVo.setExpensesUsedList(fundViewService.selectExpensesUsedList());
-        return fundViewVo;
+        return AjaxResult.success(fundViewVo);
     }
 
 }

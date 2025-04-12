@@ -26,7 +26,6 @@ public interface FundViewMapper {
 
     int selectTotleExpenses();
 
-    List<FundProjects> selectAlertsList();
 
     List<ExpensesUsed> selectExpensesUsedList();
 }

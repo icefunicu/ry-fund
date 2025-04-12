@@ -18,6 +18,7 @@ public interface FundProjectsMapper
      * @return 项目基本信息
      */
     public FundProjects selectFundProjectsById(String id);
+    List<FundProjects> selectAlertsList();
 
     /**
      * 查询项目基本信息列表

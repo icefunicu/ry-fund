@@ -55,7 +55,7 @@ public class FundViewServiceImpl implements FundViewService {
 
     @Override
     public List<FundProjects> selectAlertsList() {
-        return fundViewMapper.selectAlertsList();
+        return fundProjectsMapper.selectAlertsList();
     }
 
     @Override

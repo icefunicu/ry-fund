@@ -38,8 +38,8 @@ public class FundViewController {
         return AjaxResult.success(fundViewVo);
     }
 
-    @RequestMapping("/excution")
-    public AjaxResult excution(){
+    @RequestMapping("/execution")
+    public AjaxResult execution(){
         ExecutionView executionView = new ExecutionView();
         //查询执行中的项目数量
         executionView.setExecutingProjectCount(fundViewService.selectExecuteProjectsCount());

@@ -6,6 +6,6 @@ import lombok.Data;
 public class ExpensesUsed {
 
     private String  expenseType;
-    //对应数量的百分比
+
     private int  expensePercent;
 }

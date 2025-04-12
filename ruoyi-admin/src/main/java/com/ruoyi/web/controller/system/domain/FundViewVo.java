@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class FundViewVo {
 
-    private List<FundProjects> fundProjectsList;
+    private List<FundProjectExecutions> fundProjectsList;
 
     private int executeProjectsCount;
 

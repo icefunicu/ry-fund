@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.controller.system.mapper.FundViewMapper">
+
+
+    <select id="selectFundProjectsList"
+            resultType="com.ruoyi.web.controller.system.domain.FundProjectExecutions">
+        select project_id,progress
+        from fund_project_executions;
+    </select>
+    <select id="selectExecuteProjectsCount" resultType="int">
+        select count(*) from  fund_projects where status='执行中';
+    </select>
+    <select id="selectAcceptanceProjectsCount" resultType="int">
+        select count(*) from fund_projects where status='评审中';
+    </select>
+    <select id="selectDeadlineProjectsCount" resultType="int">
+        # 查询截止小于30天的项目
+        select count(*) from fund_projects where deadline  &lt; DATE_ADD(NOW(), INTERVAL 30 DAY);
+    </select>
+    <select id="selectTotleExpenses" resultType="int">
+        # 查询所有项目总费用
+        select sum(budget) from fund_projects;
+    </select>
+    <select id="selectAlertsList" resultType="com.ruoyi.web.controller.system.domain.FundProjects">
+        select * from fund_projects where deadline  &lt; DATE_ADD(NOW(), INTERVAL 30 DAY);
+    </select>
+    <select id="selectExpensesUsedList" resultType="com.ruoyi.web.controller.system.domain.ExpensesUsed">
+        select expense_type , sum(expense_amount) as expense_percent from fund_project_expenses group by expense_type;
+    </select>
+</mapper>

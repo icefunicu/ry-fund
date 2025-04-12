@@ -67,4 +67,19 @@ public class FundViewServiceImpl implements FundViewService {
     public int selectUsedExpense() {
         return fundViewMapper.selectUsedExpense();
     }
+
+    @Override
+    public int selectCheckingTotalCount() {
+        return fundViewMapper.selectCheckingTotalCount();
+    }
+
+    @Override
+    public int selectPassedTotalCount() {
+        return fundViewMapper.selectPassedTotalCount();
+    }
+
+    @Override
+    public int selectPassAndRejectCount() {
+        return fundViewMapper.selectPassAndRejectCount();
+    }
 }

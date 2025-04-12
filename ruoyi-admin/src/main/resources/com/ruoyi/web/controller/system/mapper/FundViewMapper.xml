@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectAcceptanceProjectsCount" resultType="int">
         select count(*) from fund_projects where status='评审中';
     </select>
+
     <select id="selectDeadlineProjectsCount" resultType="int">
         # 查询截止小于30天的项目
         select count(*) from fund_projects where deadline  &lt; DATE_ADD(NOW(), INTERVAL 30 DAY) and status in ('执行中','验收中','驳回');
@@ -31,4 +32,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectUsedExpense" resultType="java.lang.Integer">
         select sum(expense_amount) from fund_project_expenses;
     </select>
+
+    <select id="selectPassAndRejectCount" resultType="java.lang.Integer">
+        select count(*) from fund_projects where status in ('通过','驳回');
+    </select>
+    <select id="selectCheckingTotalCount" resultType="java.lang.Integer">
+        select count(*) from fund_projects where status in ('执行中');
+    </select>
+    <select id="selectPassedTotalCount" resultType="java.lang.Integer">
+        select count(*) from fund_projects where status in ('通过');
+    </select>
+
 </mapper>

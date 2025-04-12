@@ -30,4 +30,10 @@ public interface FundViewMapper {
     List<ExpensesUsed> selectExpensesUsedList();
 
     int selectUsedExpense();
+
+    int selectCheckingTotalCount();
+
+    int selectPassedTotalCount();
+
+    int selectPassAndRejectCount();
 }

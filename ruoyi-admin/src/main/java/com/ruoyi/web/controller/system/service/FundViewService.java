@@ -29,4 +29,10 @@ public interface FundViewService {
     List<ExpensesUsed> selectExpensesUsedList();
 
     int selectUsedExpense();
+
+    int selectCheckingTotalCount();
+
+    int selectPassedTotalCount();
+
+    int selectPassAndRejectCount();
 }

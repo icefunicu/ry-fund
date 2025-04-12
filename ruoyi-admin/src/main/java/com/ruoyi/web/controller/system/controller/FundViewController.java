@@ -51,14 +51,17 @@ public class FundViewController {
     }
     @RequestMapping("/acceptance")
     public AjaxResult acceptance(){
-        int acceptanceProjectsCount = fundViewService.selectAcceptanceProjectsCount();
+        int checkingCount = fundViewService.selectCheckingTotalCount();
+        int passedCount = fundViewService.selectPassedTotalCount();
+
         int passRate = 0;
-        if(acceptanceProjectsCount>0){
-            passRate = fundViewService.selectAcceptanceProjectsCount()*100/fundViewService.selectAcceptanceProjectsCount();
+
+        if(checkingCount>0){
+            passRate = passedCount * 100 / fundViewService.selectPassAndRejectCount() ;
         }
         AcceptView acceptView = new AcceptView();
-        acceptView.setCheckingProjectCount(fundViewService.selectExecuteProjectsCount());
-        acceptView.setPassedProjectCount(fundViewService.selectAcceptanceProjectsCount());
+        acceptView.setCheckingProjectCount(checkingCount);
+        acceptView.setPassedProjectCount(passedCount);
         acceptView.setPassRate(passRate);
         return AjaxResult.success(acceptView);
     }

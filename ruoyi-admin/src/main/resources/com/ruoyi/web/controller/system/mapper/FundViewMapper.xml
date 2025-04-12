@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     <select id="selectDeadlineProjectsCount" resultType="int">
         # 查询截止小于30天的项目
-        select count(*) from fund_projects where deadline  &lt; DATE_ADD(NOW(), INTERVAL 30 DAY);
+        select count(*) from fund_projects where deadline  &lt; DATE_ADD(NOW(), INTERVAL 30 DAY) and status in ('执行中','验收中','驳回');
     </select>
     <select id="selectTotleExpenses" resultType="int">
         # 查询所有项目总费用
@@ -27,5 +27,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectExpensesUsedList"  resultType="com.ruoyi.web.controller.system.domain.ExpensesUsed" >
         select expense_type as expenseType, sum(expense_amount) as expensePercent from fund_project_expenses group by expense_type;
+    </select>
+    <select id="selectUsedExpense" resultType="java.lang.Integer">
+        select sum(expense_amount) from fund_project_expenses;
     </select>
 </mapper>

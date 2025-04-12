@@ -1,6 +1,8 @@
 package com.ruoyi.web.controller.system.controller;
 
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.web.controller.system.domain.AcceptView;
+import com.ruoyi.web.controller.system.domain.ExecutionView;
 import com.ruoyi.web.controller.system.domain.FundViewVo;
 import com.ruoyi.web.controller.system.service.FundViewService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,4 +38,28 @@ public class FundViewController {
         return AjaxResult.success(fundViewVo);
     }
 
+    @RequestMapping("/excution")
+    public AjaxResult excution(){
+        ExecutionView executionView = new ExecutionView();
+        //查询执行中的项目数量
+        executionView.setExecutingProjectCount(fundViewService.selectExecuteProjectsCount());
+        //查询项目总金额
+        executionView.setProjectTotalFund(fundViewService.selectTotleExpenses());
+        //查询已使用支出百分比 保留两位小数
+        executionView.setUsedExpensePercent((float) fundViewService.selectUsedExpense() /fundViewService.selectTotleExpenses()*100);
+       return AjaxResult.success(executionView);
+    }
+    @RequestMapping("/acceptance")
+    public AjaxResult acceptance(){
+        int acceptanceProjectsCount = fundViewService.selectAcceptanceProjectsCount();
+        int passRate = 0;
+        if(acceptanceProjectsCount>0){
+            passRate = fundViewService.selectAcceptanceProjectsCount()*100/fundViewService.selectAcceptanceProjectsCount();
+        }
+        AcceptView acceptView = new AcceptView();
+        acceptView.setCheckingProjectCount(fundViewService.selectExecuteProjectsCount());
+        acceptView.setPassedProjectCount(fundViewService.selectAcceptanceProjectsCount());
+        acceptView.setPassRate(passRate);
+        return AjaxResult.success(acceptView);
+    }
 }

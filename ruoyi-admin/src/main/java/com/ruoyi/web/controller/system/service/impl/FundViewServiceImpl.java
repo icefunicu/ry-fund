@@ -62,4 +62,9 @@ public class FundViewServiceImpl implements FundViewService {
     public List<ExpensesUsed> selectExpensesUsedList() {
         return fundViewMapper.selectExpensesUsedList();
     }
+
+    @Override
+    public int selectUsedExpense() {
+        return fundViewMapper.selectUsedExpense();
+    }
 }

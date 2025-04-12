@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectAlertsList" parameterType="FundProjects" resultMap="FundProjectsResult">
         <include refid="selectFundProjectsVo"/>
-        where deadline  &lt; DATE_ADD(NOW(), INTERVAL 30 DAY);
+        where deadline  &lt; DATE_ADD(NOW(), INTERVAL 30 DAY) and status in ('执行中','验收中','驳回');
     </select>
 
     <insert id="insertFundProjects" parameterType="FundProjects" useGeneratedKeys="true" keyProperty="id">

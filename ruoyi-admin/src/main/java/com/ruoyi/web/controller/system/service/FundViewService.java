@@ -27,4 +27,6 @@ public interface FundViewService {
     List<FundProjects> selectAlertsList();
 
     List<ExpensesUsed> selectExpensesUsedList();
+
+    int selectUsedExpense();
 }

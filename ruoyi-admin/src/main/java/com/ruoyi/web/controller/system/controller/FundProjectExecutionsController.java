@@ -69,11 +69,11 @@ public class FundProjectExecutionsController extends BaseController
 //            if (!Objects.equals(fundProjects.getStatus(), "执行中")){
 //                continue;
 //            }
-            if(fundProjectExecutions.getTitle()!=null|| fundProjectExecutions.getStatus()!=null){
-                if(!fundProjects.getTitle().contains(fundProjectExecutions.getTitle())){
+            if(fundProjectExecutions.getTitle()!=null || fundProjectExecutions.getStatus()!=null){
+                if(fundProjectExecutions.getTitle()!=null && !fundProjects.getTitle().contains(fundProjectExecutions.getTitle())){
                     continue;
                 }
-                if(!fundProjects.getStatus().equals(fundProjectExecutions.getStatus())){
+                if(fundProjectExecutions.getStatus() != null && !fundProjects.getStatus().equals(fundProjectExecutions.getStatus())){
                     continue;
                 }
             }

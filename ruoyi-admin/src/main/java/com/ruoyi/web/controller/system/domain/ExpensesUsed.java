@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ExpensesUsed {
 
-    private String  ExpenseType;
+    private String  expenseType;
     //对应数量的百分比
-    private int  ExpensePercent;
+    private int  expensePercent;
 }

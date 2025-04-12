@@ -1,6 +1,8 @@
 package com.ruoyi.web.controller.system.domain;
 
 import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -48,6 +50,17 @@ public class FundProjectAcceptances extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "报告提交日期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date submissionDate;
+
+
+    private List<String> commonList;
+
+    public List<String> getCommonList() {
+        return commonList;
+    }
+
+    public void setCommonList(List<String> commonList) {
+        this.commonList = commonList;
+    }
 
     public void setId(String id)
     {

@@ -205,7 +205,11 @@ public class FundProjectExecutionsController extends BaseController
             FundProjectAcceptances fundProjectAcceptances = new FundProjectAcceptances();
             fundProjectAcceptances.setProjectId(fundProjectExecutions.getProjectId());
             fundProjectAcceptances.setAcceptanceStatus("待验收");
-            fundProjectAcceptancesService.insertFundProjectAcceptances(fundProjectAcceptances);
+            if (fundProjectAcceptancesService.selectFundProjectAcceptancesByProjectId((fundProjectExecutions.getProjectId())) != null) {
+                fundProjectAcceptancesService.updateFundProjectAcceptances(fundProjectAcceptances);
+            } else {
+                fundProjectAcceptancesService.insertFundProjectAcceptances(fundProjectAcceptances);
+            }
         }
         return toAjax(fundProjectExecutionsService.updateFundProjectExecutions(fundProjectExecutions));
     }

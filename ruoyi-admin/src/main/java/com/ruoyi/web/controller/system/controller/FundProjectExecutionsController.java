@@ -113,7 +113,7 @@ public class FundProjectExecutionsController extends BaseController
         List<FundProjectExecutions> newlist = new ArrayList<>();
         for(FundProjectExecutions fundProjectExecutions1 : list){
             FundProjects fundProjects = fundProjectsService.selectFundProjectsById(fundProjectExecutions1.getProjectId());
-            if (fundProjects.getStatus().equals("验收中")||  fundProjects.getStatus().equals("完成")|| fundProjects.getStatus().equals("驳回")){
+            if (fundProjects.getStatus().equals("验收中")||  fundProjects.getStatus().equals("完成")|| fundProjects.getStatus().equals("驳回")|| fundProjects.getStatus().equals("执行中")){
                 fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getNickName());
                 // 将deadline从时间戳格式转换为 yyyy-MM-dd
                 fundProjects.setDeadline(new java.sql.Date(fundProjects.getDeadline().getTime()));

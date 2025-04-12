@@ -1,5 +1,7 @@
 package com.ruoyi.web.controller.system.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
@@ -51,11 +53,16 @@ public class FundProjectAcceptancesController extends BaseController
     }
 
     @PostMapping("/listbyid")
-    public TableDataInfo listById(@RequestBody FundProjectAcceptances fundProjectAcceptances)
+    public AjaxResult listById(@RequestBody FundProjectAcceptances fundProjectAcceptances)
     {
         startPage();
         List<FundProjectAcceptances> list = fundProjectAcceptancesService.selectFundProjectAcceptancesList(fundProjectAcceptances);
-        return getDataTable(list);
+        list.forEach(item -> {
+            if (item.getReviewComments() != null) {
+                item.setCommonList(Arrays.asList(item.getReviewComments().split("###")));
+            }
+        });
+        return AjaxResult.success(list.get(0));
     }
 
     /**

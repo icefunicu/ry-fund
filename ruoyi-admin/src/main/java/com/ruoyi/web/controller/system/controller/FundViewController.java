@@ -56,7 +56,7 @@ public class FundViewController {
 
         float passRate = 0;
 
-        if(checkingCount>0){
+        if(passedCount>0){
             passRate = (float) (passedCount * 100) / fundViewService.selectPassAndRejectCount() ;
         }
         AcceptView acceptView = new AcceptView();

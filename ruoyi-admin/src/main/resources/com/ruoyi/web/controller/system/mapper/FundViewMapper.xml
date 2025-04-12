@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select count(*) from fund_projects where status in ('完成','驳回');
     </select>
     <select id="selectCheckingTotalCount" resultType="java.lang.Integer">
-        select count(*) from fund_projects where status in ('执行中');
+        select count(*) from fund_projects where status in ('验收中','执行中');
     </select>
     <select id="selectPassedTotalCount" resultType="java.lang.Integer">
         select count(*) from fund_projects where status in ('完成');

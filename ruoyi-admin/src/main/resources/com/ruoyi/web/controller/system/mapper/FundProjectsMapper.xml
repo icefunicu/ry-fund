@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="description != null  and description != ''"> and description = #{description}</if>
             <if test="applicationFile != null  and applicationFile != ''"> and application_file = #{applicationFile}</if>
             <if test="demonstrationFile != null  and demonstrationFile != ''"> and demonstration_file = #{demonstrationFile}</if>
-            <if test="applyDate != null "> and apply_date = #{applyDate}</if>
+            <if test="applyDate != null "> and apply_date >= #{applyDate} and apply_date &lt;= DATE_ADD(#{applyDate}, INTERVAL 1 YEAR)</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
             <if test="startDate != null "> and start_date = #{startDate}</if>
             <if test="deadline != null "> and deadline = #{deadline}</if>

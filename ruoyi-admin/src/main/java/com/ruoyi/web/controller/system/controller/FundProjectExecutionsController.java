@@ -69,6 +69,14 @@ public class FundProjectExecutionsController extends BaseController
 //            if (!Objects.equals(fundProjects.getStatus(), "执行中")){
 //                continue;
 //            }
+            if(fundProjectExecutions.getTitle()!=null|| fundProjectExecutions.getStatus()!=null){
+                if(!fundProjects.getTitle().contains(fundProjectExecutions.getTitle())){
+                    continue;
+                }
+                if(!fundProjects.getStatus().equals(fundProjectExecutions.getStatus())){
+                    continue;
+                }
+            }
             fundProjects.setApplicantName(sysUserService.selectUserById((long) fundProjects.getApplicantId()).getNickName());
             // 将deadline从时间戳格式转换为 yyyy-MM-dd
             fundProjects.setDeadline(new java.sql.Date(fundProjects.getDeadline().getTime()));

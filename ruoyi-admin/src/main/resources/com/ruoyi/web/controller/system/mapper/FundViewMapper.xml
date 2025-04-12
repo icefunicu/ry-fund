@@ -34,13 +34,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectPassAndRejectCount" resultType="java.lang.Integer">
-        select count(*) from fund_projects where status in ('通过','驳回');
+        select count(*) from fund_projects where status in ('完成','驳回');
     </select>
     <select id="selectCheckingTotalCount" resultType="java.lang.Integer">
         select count(*) from fund_projects where status in ('执行中');
     </select>
     <select id="selectPassedTotalCount" resultType="java.lang.Integer">
-        select count(*) from fund_projects where status in ('通过');
+        select count(*) from fund_projects where status in ('完成');
     </select>
 
 </mapper>

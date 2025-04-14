@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -15,12 +16,15 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2025-04-01
  */
+@Data
 public class FundProjectAcceptances extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 验收记录ID */
     private String id;
+
+    private String level;
 
     /** 项目ID */
     @Excel(name = "项目ID")

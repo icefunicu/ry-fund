@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -16,7 +17,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2025-04-01
  */
-
+@Data
 public class FundProjects extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -24,6 +25,7 @@ public class FundProjects extends BaseEntity
     /** 项目ID */
     private String id;
 
+    private String level;
     /** 申请人ID */
     @Excel(name = "申请人ID")
     private int applicantId;
@@ -81,6 +83,7 @@ public class FundProjects extends BaseEntity
     private BigDecimal usedFund;
     //使用金额百分比
     private BigDecimal usedFundProgress;
+
     //经费使用情况列表
     private List<FundProjectExpenses> fundProjectExpensesList;
     public List<FundProjectExpenses> getFundProjectExpensesList() {

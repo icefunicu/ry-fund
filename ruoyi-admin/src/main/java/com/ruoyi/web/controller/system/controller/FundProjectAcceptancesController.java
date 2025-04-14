@@ -155,10 +155,10 @@ public class FundProjectAcceptancesController extends BaseController
      * */
     @PostMapping("/submit")
     public AjaxResult submit(@RequestBody FundProjectAcceptances fundProjectAcceptances){
-        fundProjectAcceptances.setAcceptanceStatus("通过");
         String projectId = fundProjectAcceptances.getProjectId();
         FundProjects fundProjects = fundProjectsService.selectFundProjectsById(projectId);
-        fundProjects.setStatus("完成");
+        fundProjects.setStatus("通过");
+        fundProjects.setLevel(fundProjectAcceptances.getAcceptanceStatus());
         fundProjectsService.updateFundProjects(fundProjects);
         return toAjax(fundProjectAcceptancesService.updateFundProjectAcceptances(fundProjectAcceptances));
     }

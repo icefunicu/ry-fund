@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectFundProjectsVo">
-        select id, applicant_id, title, description, application_file, demonstration_file, apply_date, status, start_date, deadline, budget, created_at, updated_at ,end_date from fund_projects
+        select id, applicant_id, title, description, application_file, demonstration_file, apply_date, status, start_date, deadline, budget, created_at, updated_at ,end_date,level from fund_projects
     </sql>
 
     <select id="selectFundProjectsList" parameterType="FundProjects" resultMap="FundProjectsResult">
@@ -69,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createdAt != null">created_at,</if>
             <if test="updatedAt != null">updated_at,</if>
             <if test="endDate != null">end_date,</if>
+            <if test="level != null and level != ''">level,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="applicantId != null and applicantId != ''">#{applicantId},</if>
@@ -84,6 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createdAt != null">#{createdAt},</if>
             <if test="updatedAt != null">#{updatedAt},</if>
             <if test="endDate != null">#{endDate},</if>
+            <if test="level != null and level != ''">#{level},</if>
          </trim>
     </insert>
 
@@ -103,6 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createdAt != null">created_at = #{createdAt},</if>
             <if test="updatedAt != null">updated_at = #{updatedAt},</if>
             <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="level != null and level != ''">level = #{level},</if>
         </trim>
         where id = #{id}
     </update>

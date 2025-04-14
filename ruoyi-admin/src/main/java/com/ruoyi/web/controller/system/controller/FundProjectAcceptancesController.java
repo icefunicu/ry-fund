@@ -2,6 +2,7 @@ package com.ruoyi.web.controller.system.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
@@ -62,6 +63,9 @@ public class FundProjectAcceptancesController extends BaseController
                 item.setCommonList(Arrays.asList(item.getReviewComments().split("###")));
             }
         });
+        if (list.isEmpty()){
+            return AjaxResult.success(Collections.emptyList());
+        }
         return AjaxResult.success(list.get(0));
     }
 

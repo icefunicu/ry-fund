@@ -108,4 +108,27 @@ public class FundProjectExecutionsServiceImpl implements IFundProjectExecutionsS
         fundProjectExecutions.setExecutionStatus("完成");
         return fundProjectExecutionsMapper.updateFundProjectExecutions(fundProjectExecutions);
     }
+    /**
+     * 申请延期
+     * */
+    @Override
+    public int applyDelay(FundProjectExecutions fundProjectExecutions) {
+        FundProjects fundProjects = fundProjectsMapper.selectFundProjectsById(fundProjectExecutions.getProjectId());
+        fundProjects.setStatus("延期结题");
+        fundProjects.setDeadline(fundProjectExecutions.getNewDeadline());
+        fundProjectsMapper.updateFundProjects(fundProjects);
+        fundProjectExecutions.setExecutionStatus("延期");
+        return fundProjectExecutionsMapper.updateFundProjectExecutions(fundProjectExecutions);
+    }
+    /**
+     * 申请撤题
+     * */
+    @Override
+    public int applyWithdraw(FundProjectExecutions fundProjectExecutions) {
+        FundProjects fundProjects = fundProjectsMapper.selectFundProjectsById(fundProjectExecutions.getProjectId());
+        fundProjects.setStatus("撤题");
+        fundProjectsMapper.updateFundProjects(fundProjects);
+        fundProjectExecutions.setExecutionStatus("撤题");
+        return fundProjectExecutionsMapper.updateFundProjectExecutions(fundProjectExecutions);
+    }
 }

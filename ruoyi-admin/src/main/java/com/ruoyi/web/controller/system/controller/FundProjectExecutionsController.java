@@ -239,4 +239,21 @@ public class FundProjectExecutionsController extends BaseController
     {
         return toAjax(fundProjectExecutionsService.submitFundProjectExecutions(fundProjectExecutions));
     }
+
+    /**
+     * 申请延期
+     * */
+    @PostMapping("/applyDelay")
+    public AjaxResult applyDelay(@RequestBody FundProjectExecutions fundProjectExecutions)
+    {
+        return toAjax(fundProjectExecutionsService.applyDelay(fundProjectExecutions));
+    }
+    /**
+     * 申请撤题
+     * */
+    @PostMapping("/applyWithdraw")
+    public AjaxResult applyWithdraw(@RequestBody FundProjectExecutions fundProjectExecutions)
+    {
+        return toAjax(fundProjectExecutionsService.applyWithdraw(fundProjectExecutions));
+    }
 }

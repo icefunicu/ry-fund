@@ -51,6 +51,10 @@ public class FundProjectExecutions extends BaseEntity
     @Excel(name = "执行备注")
     private String remarks;
 
+    /** 申请延期的新deadline */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date newDeadline;
+
     private FundProjects fundProjects;
 
     private List<FundProjectExpenses> fundProjectExpenses;

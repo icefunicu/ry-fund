@@ -60,4 +60,8 @@ public interface IFundProjectExecutionsService
     public int deleteFundProjectExecutionsById(String id);
 
     int submitFundProjectExecutions(FundProjectExecutions fundProjectExecutions);
+
+    int applyDelay(FundProjectExecutions fundProjectExecutions);
+
+    int applyWithdraw(FundProjectExecutions fundProjectExecutions);
 }

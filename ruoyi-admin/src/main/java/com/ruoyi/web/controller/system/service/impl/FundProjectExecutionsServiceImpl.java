@@ -127,8 +127,6 @@ public class FundProjectExecutionsServiceImpl implements IFundProjectExecutionsS
     public int applyWithdraw(FundProjectExecutions fundProjectExecutions) {
         FundProjects fundProjects = fundProjectsMapper.selectFundProjectsById(fundProjectExecutions.getProjectId());
         fundProjects.setStatus("撤题");
-        fundProjectsMapper.updateFundProjects(fundProjects);
-        fundProjectExecutions.setExecutionStatus("撤题");
-        return fundProjectExecutionsMapper.updateFundProjectExecutions(fundProjectExecutions);
+        return  fundProjectsMapper.updateFundProjects(fundProjects);
     }
 }

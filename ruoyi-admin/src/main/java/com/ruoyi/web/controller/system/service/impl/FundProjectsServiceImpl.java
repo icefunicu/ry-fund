@@ -105,7 +105,6 @@ public class FundProjectsServiceImpl implements IFundProjectsService
      * */
     @Override
     public int acceptance(FundProjects fundProjects) {
-        fundProjects = fundProjectsMapper.selectFundProjectsById(fundProjects.getId());
         fundProjects.setStatus("完成");
         return fundProjectsMapper.updateFundProjects(fundProjects);
     }

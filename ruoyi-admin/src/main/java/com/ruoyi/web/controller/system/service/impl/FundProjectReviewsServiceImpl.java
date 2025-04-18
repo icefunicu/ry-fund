@@ -115,4 +115,20 @@ public class FundProjectReviewsServiceImpl implements IFundProjectReviewsService
         fundProjectExecutionsMapper.insertFundProjectExecutions(fundProjectExecutions);
         return fundProjectReviewsMapper.insertFundProjectReviews(fundProjectReviews);
     }
+
+    @Override
+    public int reject(FundProjectReviews fundProjectReviews) {
+        FundProjects fundProjects = fundProjectsMapper.selectFundProjectsById(fundProjectReviews.getProjectId());
+        fundProjects.setStatus("驳回");
+        fundProjectsMapper.updateFundProjects(fundProjects);
+        fundProjectReviews.setComments(fundProjectReviews.getReason());
+        return fundProjectReviewsMapper.insertFundProjectReviews(fundProjectReviews);
+    }
+
+    @Override
+    public List<FundProjectReviews> getReason(FundProjectReviews fundProjectReviews) {
+        return fundProjectReviewsMapper.getReasonByProjectId(fundProjectReviews.getProjectId());
+    }
+
+
 }

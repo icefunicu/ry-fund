@@ -86,6 +86,8 @@ public class FundProjects extends BaseEntity
 
     //经费使用情况列表
     private List<FundProjectExpenses> fundProjectExpensesList;
+    //项目评审记录列表
+    private List<FundProjectReviews> fundProjectReviewsList;
     public List<FundProjectExpenses> getFundProjectExpensesList() {
         return fundProjectExpensesList;
     }

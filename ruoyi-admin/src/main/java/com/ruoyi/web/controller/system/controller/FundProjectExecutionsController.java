@@ -3,9 +3,7 @@ package com.ruoyi.web.controller.system.controller;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.servlet.http.HttpServletResponse;
-
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.web.controller.system.domain.FundProjectAcceptances;
@@ -14,7 +12,6 @@ import com.ruoyi.web.controller.system.domain.FundProjects;
 import com.ruoyi.web.controller.system.service.IFundProjectAcceptancesService;
 import com.ruoyi.web.controller.system.service.IFundProjectExpensesService;
 import com.ruoyi.web.controller.system.service.IFundProjectsService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -96,6 +93,9 @@ public class FundProjectExecutionsController extends BaseController
             fundProjects.setusedFundProgress(fundProjects.getUsedFund().divide(fundProjects.getBudget(), 2, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("100")));
 
             fundProjectExecutions1.setFundProjectExpenses(fundProjectExpenses1);
+            if(fundProjectExecutions1.getRemarks()!=null&&!fundProjectExecutions1.getRemarks().equals("")){
+                fundProjectExecutions1.setDelayReason(fundProjectExecutions1.getRemarks());
+            }
             newlist.add(fundProjectExecutions1);
         }
         return getDataTable(newlist);

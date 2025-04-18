@@ -114,4 +114,21 @@ public class FundProjectReviewsController extends BaseController
     public AjaxResult pass(@RequestBody FundProjectReviews fundProjectReviews) {
     	return toAjax(fundProjectReviewsService.pass(fundProjectReviews));
     }
+    /**
+     * 评审不通过
+     * */
+    @PostMapping("/reject")
+    public AjaxResult reject(@RequestBody FundProjectReviews fundProjectReviews) {
+    	return toAjax(fundProjectReviewsService.reject(fundProjectReviews));
+    }
+
+    /**
+     * 评审原因
+     * */
+    @PostMapping("/reason")
+    public TableDataInfo reason(@RequestBody FundProjectReviews fundProjectReviews) {
+        startPage();
+        List<FundProjectReviews> list = fundProjectReviewsService.getReason(fundProjectReviews);
+    	return getDataTable(list);
+    }
 }

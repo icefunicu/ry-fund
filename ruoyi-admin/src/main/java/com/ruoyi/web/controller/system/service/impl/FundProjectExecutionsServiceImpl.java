@@ -118,6 +118,7 @@ public class FundProjectExecutionsServiceImpl implements IFundProjectExecutionsS
         fundProjects.setDeadline(fundProjectExecutions.getNewDeadline());
         fundProjectsMapper.updateFundProjects(fundProjects);
         fundProjectExecutions.setExecutionStatus("延期");
+        fundProjectExecutions.setRemarks(fundProjectExecutions.getDelayReason());
         return fundProjectExecutionsMapper.updateFundProjectExecutions(fundProjectExecutions);
     }
     /**

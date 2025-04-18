@@ -58,4 +58,6 @@ public interface FundProjectReviewsMapper
      * @return 结果
      */
     public int deleteFundProjectReviewsByIds(String[] ids);
+
+    List<FundProjectReviews> getReasonByProjectId(String projectId);
 }

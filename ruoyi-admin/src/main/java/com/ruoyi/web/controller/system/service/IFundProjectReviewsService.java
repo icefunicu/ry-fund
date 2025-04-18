@@ -60,4 +60,8 @@ public interface IFundProjectReviewsService
     public int deleteFundProjectReviewsById(String id);
 
     int pass(FundProjectReviews fundProjectReviews);
+
+    int reject(FundProjectReviews fundProjectReviews);
+
+    List<FundProjectReviews> getReason(FundProjectReviews fundProjectReviews);
 }

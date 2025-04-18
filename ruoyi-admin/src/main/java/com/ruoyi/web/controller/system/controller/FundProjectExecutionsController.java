@@ -134,6 +134,9 @@ public class FundProjectExecutionsController extends BaseController
                 fundProjects.setusedFundProgress(fundProjects.getUsedFund().divide(fundProjects.getBudget(), 2, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("100")));
 
                 fundProjectExecutions1.setFundProjectExpenses(fundProjectExpenses1);
+                if(fundProjectExecutions1.getRemarks()!=null&&!fundProjectExecutions1.getRemarks().equals("")){
+                    fundProjectExecutions1.setDelayReason(fundProjectExecutions1.getRemarks());
+                }
                 newlist.add(fundProjectExecutions1);
             }
         }
